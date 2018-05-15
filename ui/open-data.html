@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="media/logo-small.png">
+
+    <title>SRS | Open Data</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="styles/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- Fixed navbar -->
+<div id="srs-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <img class="srs-logo" src="media/logo-small.png">
+
+        <div class="navbar-header"><a class="navbar-brand" href="index.html">SmartRoadSense</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder"><span
+                    class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+                    class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-menubuilder">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/open-data-it.html">IT</a></li>
+                <li><a href="/project.html">Project</a></li>
+                <li class=active><a href="/open-data.html">Open Data</a></li>
+                <li><a href="/app.html">App</a></li>
+                <li><a href="/about.html">About</a> </li>
+               	<li><a href="/blog/">Blog</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h2>Open Data</h2>
+        <hr>
+        <h2>Download</h2>
+        <li style="font-size: 16pt">
+            <a href="/open_data.zip">SRS data</a>
+			<h2>Licenza</h2>
+
+			<p><i>SmartRoadSense</i> data are aggregated from contributions of thousands of users. They are release as <b>Open Data</b> under the
+				<a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License</a>&nbsp;(ODbL).
+			</p>
+
+            <p>Anyone is free to copy, to distribute and to adapt works from the database as long as they mantain any reference to <i>SmartRoadSense</i> and to contributors intact. If data are modified or adapted from the original database they need to be provided under the same licence. The whole licence is available <a href="http://opendatacommons.org/licenses/odbl/1.0/">here</a>.</p>
+            <p>These data can be distributed making clear the heading “© SmartRoadSense contributors”, the licence above and, optionally, including a link to this page.</p>
+
+            <h2>What do these data mean?</h2>
+
+            <p>The database is comprised of a single, compressed, csv file. Road roughness data are provided as punctual data, each of them representing a 20-meters long portion of a road. Each data point has roughness value which is the average between all the data collected by users referring to that particular road section.</p>
+
+            <p>Each row of the dataset contains a set of information relative to the roughness level, the geo-localization, the quality of the data and even a indication of the estimated number of occupants of each vehicle that has been involved in the gathering process. The detailed description of each information follows:</p>
+
+            <ul>
+                <li>LATITUDE, the latitude coordinate of center of the section of the road where the PPE value has been estimated;</li>
+                <li>LONGITUDE, the longitude coordinate of center of the section of the road where the PPE value has been estimated;</li>
+                <li>PPE, the average roughness level of the road section;</li>
+                <li>OSM_ID, the ID of the road in the OpenStreetMap dataset;</li>
+                <li>HIGHWAY, the road category according to the OpenStreetMap classification;</li>
+                <li>UPDATED_AT, the last update of the data for that particular road section.</li>
+            </ul>
+
+            <h2>Periodic updates</h2>
+
+            <p>Both maps and open data are updated every 6 hours. Each new update differs from the previous one just by the data points associated with roads that have been travelled in the last 6 hours. The remaining part of the dataset stays the same.</p>
+
+            <h2>Old data</h2>
+
+            <p>At the beginning of every week, data are archived in order to make possibile to reconstruct and to analyse the road network evolution.</p>
+
+            <h2>Data visualization</h2>
+
+            <p>The map available on this website just represents a possible visualization of SmartRoadSense data. We warmly invite users to develop and publish new visualizations, and to notify us at <a href="mailto:SRS Information Center<info@smartroadsense.it>">info@smartroadsense.it</a>.</p>
+
+            <h2>Data size</h2>
+
+            <!-- samples collected -->
+            <table class="counters" style="font-size: 21px;font-weight: 200;">
+                <tr>
+                    <td style="text-align: right">Data analyzed: &nbsp&nbsp</td>
+                    <td id="axis_data"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Data points received: &nbsp&nbsp</td>
+                    <td id="raw_data"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Roads analyzed: &nbsp&nbsp</td>
+                    <td id="kilometres_data"></td>
+                </tr>
+
+            </table>
+
+            <h2>Open Data API</h2>
+
+            <p>The data API for SmartRoadSense is currently under development. Currently, a single data access end-point is provided.</p>
+            <p>Data returned by the API does include aggregated roughness data. Data quality indicators and car occupancy rate are currently not returned by the API.</p>
+
+            <h3>Get aggregated data points in region</h3>
+
+            <p><tt>GET http://smartroadsense.it/bb/&lt;xmin&gt;/&lt;ymin&gt;/&lt;xmax&gt;/&lt;ymax&gt;/</tt></p>
+
+            <p>Retrieves a list of aggregated data points from a geographical region. The path includes 4 parameters: <i>xmin</i> and <i>ymin</i>, coordinates of the region’s bottom-left corner, <i>xmax</i> and <i>ymax</i> coordinates of the region’s top-right corner. The end-point is constrained to regions no larger than 2.000&nbsp;km<sup>2</sup>.</p>
+
+            <p>Sample results:</p>
+            <ul>
+                <li><a href="200.json">Success</a>, HTTP #200.</li>
+                <li><a href="400-too-big.json">Region too big</a>, HTTP #400.</li>
+                <li><a href="400.json">Parameters not valid</a>, HTTP #400.</li>
+                <li><a href="500.json">Internal error</a>, HTTP #500.</li>
+            </ul>
+    </div>
+
+</div>
+<!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="/scripts/analytics.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<!--<script src="js/ie10-viewport-bug-workaround.js"></script> -->
+<script>
+    // The Google Geocoding API url used to get the JSON data
+    var geocodingAPI = "/ws/count.php";
+
+    $.getJSON(geocodingAPI, function(json) {
+
+        // Set the variables from the results array
+        var raw = json.count_raw;
+        console.log('Raw#', raw);
+
+        var aggregated = json.count_aggregate;
+        console.log('Aggregated#', aggregated);
+
+        var kilometres = aggregated * 20 / 1000;
+        var axis_data = raw * 300;
+
+        // Set the table td text
+        $('#axis_data').text(addCommas(axis_data) + ' valori di accelerazione')
+        $('#raw_data').text(addCommas(raw) + ' punti');
+        $('#kilometres_data').text(addCommas(kilometres) + ' Km');
+    });
+
+    function addCommas(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[Unit]
+Description=6h job timer
+
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

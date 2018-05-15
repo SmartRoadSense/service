@@ -1,0 +1,40 @@
+{
+    "datetime": "2018-02-02T13:15:20.630Z",
+    "success": true,
+    "bbox": {
+        "xmin": "12.629648",
+        "ymin": "43.727620",
+        "xmax": "12.634712",
+        "ymax": "43.724084"
+    },
+    "data": [
+        {
+            "aggregate_id": 28630,
+            "ppe": 0.0480697974878457,
+            "geom": {
+                "type": "Point",
+                "coordinates": [
+                    12.634440045153,
+                    43.724331646145
+                ]
+            },
+            "osm_id": "106540758",
+            "highway": "residential",
+            "updated_at": "2015-08-28T18:53:59.939Z"
+        },
+        {
+            "aggregate_id": 28631,
+            "ppe": 0.0470747958941772,
+            "geom": {
+                "type": "Point",
+                "coordinates": [
+                    12.634337108264,
+                    43.724167843696
+                ]
+            },
+            "osm_id": "106540758",
+            "highway": "residential",
+            "updated_at": "2015-08-28T18:53:59.939Z"
+        }
+    ]
+}

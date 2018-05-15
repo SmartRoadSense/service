@@ -1,0 +1,10 @@
+[Unit]
+Description=6h job service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/srsbot/srs
+ExecStart=/usr/bin/make map-reduce
+ExecStart=/usr/bin/make update_meta
+ExecStart=/usr/bin/make open_data
+

@@ -1,0 +1,13 @@
+extends: 'eslint:recommended'
+rules:
+  indent: [ 2, 2 ]
+  quotes: [ 2, single ]
+  semi: [ 2, always ]
+  linebreak-style: [ 2, unix ]
+  no-console: 0
+  no-undef: 0
+  no-unused-vars: 1
+env:
+  es6: true
+  browser: true
+  node: false

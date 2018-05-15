@@ -1,0 +1,7 @@
+[Unit]
+Description=Weekly job service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/srsbot/srs
+ExecStart=/usr/bin/make history

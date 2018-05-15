@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="srs_raw" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="agency" idMethod="native" phpName="Agency">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="device" idMethod="native" phpName="Device">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="agency_id" phpName="AgencyId" type="INTEGER" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="otc" phpName="Otc" type="VARCHAR" size="255"/>
+    <column name="public_key" phpName="PublicKey" type="VARCHAR" size="800"/>
+    <column name="activation_date" phpName="ActivationDate" type="TIMESTAMP"/>
+    <foreign-key foreignTable="agency" name="device_agency_id_fkey">
+      <reference local="agency_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="planet_osm_line" idMethod="native" phpName="PlanetOsmLine">
+    <column name="osm_id" phpName="OsmId" type="BIGINT"/>
+    <column name="access" phpName="Access" type="LONGVARCHAR"/>
+    <column name="addr:housename" phpName="Addr:housename" type="LONGVARCHAR"/>
+    <column name="addr:housenumber" phpName="Addr:housenumber" type="LONGVARCHAR"/>
+    <column name="addr:interpolation" phpName="Addr:interpolation" type="LONGVARCHAR"/>
+    <column name="admin_level" phpName="AdminLevel" type="LONGVARCHAR"/>
+    <column name="aerialway" phpName="Aerialway" type="LONGVARCHAR"/>
+    <column name="aeroway" phpName="Aeroway" type="LONGVARCHAR"/>
+    <column name="amenity" phpName="Amenity" type="LONGVARCHAR"/>
+    <column name="area" phpName="Area" type="LONGVARCHAR"/>
+    <column name="barrier" phpName="Barrier" type="LONGVARCHAR"/>
+    <column name="bicycle" phpName="Bicycle" type="LONGVARCHAR"/>
+    <column name="brand" phpName="Brand" type="LONGVARCHAR"/>
+    <column name="bridge" phpName="Bridge" type="LONGVARCHAR"/>
+    <column name="boundary" phpName="Boundary" type="LONGVARCHAR"/>
+    <column name="building" phpName="Building" type="LONGVARCHAR"/>
+    <column name="construction" phpName="Construction" type="LONGVARCHAR"/>
+    <column name="covered" phpName="Covered" type="LONGVARCHAR"/>
+    <column name="culvert" phpName="Culvert" type="LONGVARCHAR"/>
+    <column name="cutting" phpName="Cutting" type="LONGVARCHAR"/>
+    <column name="denomination" phpName="Denomination" type="LONGVARCHAR"/>
+    <column name="disused" phpName="Disused" type="LONGVARCHAR"/>
+    <column name="embankment" phpName="Embankment" type="LONGVARCHAR"/>
+    <column name="foot" phpName="Foot" type="LONGVARCHAR"/>
+    <column name="generator:source" phpName="Generator:source" type="LONGVARCHAR"/>
+    <column name="harbour" phpName="Harbour" type="LONGVARCHAR"/>
+    <column name="highway" phpName="Highway" type="LONGVARCHAR"/>
+    <column name="historic" phpName="Historic" type="LONGVARCHAR"/>
+    <column name="horse" phpName="Horse" type="LONGVARCHAR"/>
+    <column name="intermittent" phpName="Intermittent" type="LONGVARCHAR"/>
+    <column name="junction" phpName="Junction" type="LONGVARCHAR"/>
+    <column name="landuse" phpName="Landuse" type="LONGVARCHAR"/>
+    <column name="layer" phpName="Layer" type="LONGVARCHAR"/>
+    <column name="leisure" phpName="Leisure" type="LONGVARCHAR"/>
+    <column name="lock" phpName="Lock" type="LONGVARCHAR"/>
+    <column name="man_made" phpName="ManMade" type="LONGVARCHAR"/>
+    <column name="military" phpName="Military" type="LONGVARCHAR"/>
+    <column name="motorcar" phpName="Motorcar" type="LONGVARCHAR"/>
+    <column name="name" phpName="Name" type="LONGVARCHAR"/>
+    <column name="natural" phpName="Natural" type="LONGVARCHAR"/>
+    <column name="office" phpName="Office" type="LONGVARCHAR"/>
+    <column name="oneway" phpName="Oneway" type="LONGVARCHAR"/>
+    <column name="operator" phpName="Operator" type="LONGVARCHAR"/>
+    <column name="place" phpName="Place" type="LONGVARCHAR"/>
+    <column name="population" phpName="Population" type="LONGVARCHAR"/>
+    <column name="power" phpName="Power" type="LONGVARCHAR"/>
+    <column name="power_source" phpName="PowerSource" type="LONGVARCHAR"/>
+    <column name="public_transport" phpName="PublicTransport" type="LONGVARCHAR"/>
+    <column name="railway" phpName="Railway" type="LONGVARCHAR"/>
+    <column name="ref" phpName="Ref" type="LONGVARCHAR"/>
+    <column name="religion" phpName="Religion" type="LONGVARCHAR"/>
+    <column name="route" phpName="Route" type="LONGVARCHAR"/>
+    <column name="service" phpName="Service" type="LONGVARCHAR"/>
+    <column name="shop" phpName="Shop" type="LONGVARCHAR"/>
+    <column name="sport" phpName="Sport" type="LONGVARCHAR"/>
+    <column name="surface" phpName="Surface" type="LONGVARCHAR"/>
+    <column name="toll" phpName="Toll" type="LONGVARCHAR"/>
+    <column name="tourism" phpName="Tourism" type="LONGVARCHAR"/>
+    <column name="tower:type" phpName="Tower:type" type="LONGVARCHAR"/>
+    <column name="tracktype" phpName="Tracktype" type="LONGVARCHAR"/>
+    <column name="tunnel" phpName="Tunnel" type="LONGVARCHAR"/>
+    <column name="water" phpName="Water" type="LONGVARCHAR"/>
+    <column name="waterway" phpName="Waterway" type="LONGVARCHAR"/>
+    <column name="wetland" phpName="Wetland" type="LONGVARCHAR"/>
+    <column name="width" phpName="Width" type="LONGVARCHAR"/>
+    <column name="wood" phpName="Wood" type="LONGVARCHAR"/>
+    <column name="z_order" phpName="ZOrder" type="INTEGER"/>
+    <column name="way_area" phpName="WayArea" type="REAL" size="24"/>
+    <column name="way" phpName="Way" type="VARCHAR"/>
+    <index name="planet_osm_line_index">
+      <index-column name="way"/>
+    </index>
+    <index name="planet_osm_line_pkey">
+      <index-column name="osm_id"/>
+    </index>
+  </table>
+  <table name="planet_osm_nodes" idMethod="native" phpName="PlanetOsmNodes">
+    <column name="id" phpName="Id" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="lat" phpName="Lat" type="INTEGER" required="true"/>
+    <column name="lon" phpName="Lon" type="INTEGER" required="true"/>
+  </table>
+  <table name="planet_osm_point" idMethod="native" phpName="PlanetOsmPoint">
+    <column name="osm_id" phpName="OsmId" type="BIGINT"/>
+    <column name="access" phpName="Access" type="LONGVARCHAR"/>
+    <column name="addr:housename" phpName="Addr:housename" type="LONGVARCHAR"/>
+    <column name="addr:housenumber" phpName="Addr:housenumber" type="LONGVARCHAR"/>
+    <column name="addr:interpolation" phpName="Addr:interpolation" type="LONGVARCHAR"/>
+    <column name="admin_level" phpName="AdminLevel" type="LONGVARCHAR"/>
+    <column name="aerialway" phpName="Aerialway" type="LONGVARCHAR"/>
+    <column name="aeroway" phpName="Aeroway" type="LONGVARCHAR"/>
+    <column name="amenity" phpName="Amenity" type="LONGVARCHAR"/>
+    <column name="area" phpName="Area" type="LONGVARCHAR"/>
+    <column name="barrier" phpName="Barrier" type="LONGVARCHAR"/>
+    <column name="bicycle" phpName="Bicycle" type="LONGVARCHAR"/>
+    <column name="brand" phpName="Brand" type="LONGVARCHAR"/>
+    <column name="bridge" phpName="Bridge" type="LONGVARCHAR"/>
+    <column name="boundary" phpName="Boundary" type="LONGVARCHAR"/>
+    <column name="building" phpName="Building" type="LONGVARCHAR"/>
+    <column name="capital" phpName="Capital" type="LONGVARCHAR"/>
+    <column name="construction" phpName="Construction" type="LONGVARCHAR"/>
+    <column name="covered" phpName="Covered" type="LONGVARCHAR"/>
+    <column name="culvert" phpName="Culvert" type="LONGVARCHAR"/>
+    <column name="cutting" phpName="Cutting" type="LONGVARCHAR"/>
+    <column name="denomination" phpName="Denomination" type="LONGVARCHAR"/>
+    <column name="disused" phpName="Disused" type="LONGVARCHAR"/>
+    <column name="ele" phpName="Ele" type="LONGVARCHAR"/>
+    <column name="embankment" phpName="Embankment" type="LONGVARCHAR"/>
+    <column name="foot" phpName="Foot" type="LONGVARCHAR"/>
+    <column name="generator:source" phpName="Generator:source" type="LONGVARCHAR"/>
+    <column name="harbour" phpName="Harbour" type="LONGVARCHAR"/>
+    <column name="highway" phpName="Highway" type="LONGVARCHAR"/>
+    <column name="historic" phpName="Historic" type="LONGVARCHAR"/>
+    <column name="horse" phpName="Horse" type="LONGVARCHAR"/>
+    <column name="intermittent" phpName="Intermittent" type="LONGVARCHAR"/>
+    <column name="junction" phpName="Junction" type="LONGVARCHAR"/>
+    <column name="landuse" phpName="Landuse" type="LONGVARCHAR"/>
+    <column name="layer" phpName="Layer" type="LONGVARCHAR"/>
+    <column name="leisure" phpName="Leisure" type="LONGVARCHAR"/>
+    <column name="lock" phpName="Lock" type="LONGVARCHAR"/>
+    <column name="man_made" phpName="ManMade" type="LONGVARCHAR"/>
+    <column name="military" phpName="Military" type="LONGVARCHAR"/>
+    <column name="motorcar" phpName="Motorcar" type="LONGVARCHAR"/>
+    <column name="name" phpName="Name" type="LONGVARCHAR"/>
+    <column name="natural" phpName="Natural" type="LONGVARCHAR"/>
+    <column name="office" phpName="Office" type="LONGVARCHAR"/>
+    <column name="oneway" phpName="Oneway" type="LONGVARCHAR"/>
+    <column name="operator" phpName="Operator" type="LONGVARCHAR"/>
+    <column name="place" phpName="Place" type="LONGVARCHAR"/>
+    <column name="poi" phpName="Poi" type="LONGVARCHAR"/>
+    <column name="population" phpName="Population" type="LONGVARCHAR"/>
+    <column name="power" phpName="Power" type="LONGVARCHAR"/>
+    <column name="power_source" phpName="PowerSource" type="LONGVARCHAR"/>
+    <column name="public_transport" phpName="PublicTransport" type="LONGVARCHAR"/>
+    <column name="railway" phpName="Railway" type="LONGVARCHAR"/>
+    <column name="ref" phpName="Ref" type="LONGVARCHAR"/>
+    <column name="religion" phpName="Religion" type="LONGVARCHAR"/>
+    <column name="route" phpName="Route" type="LONGVARCHAR"/>
+    <column name="service" phpName="Service" type="LONGVARCHAR"/>
+    <column name="shop" phpName="Shop" type="LONGVARCHAR"/>
+    <column name="sport" phpName="Sport" type="LONGVARCHAR"/>
+    <column name="surface" phpName="Surface" type="LONGVARCHAR"/>
+    <column name="toll" phpName="Toll" type="LONGVARCHAR"/>
+    <column name="tourism" phpName="Tourism" type="LONGVARCHAR"/>
+    <column name="tower:type" phpName="Tower:type" type="LONGVARCHAR"/>
+    <column name="tunnel" phpName="Tunnel" type="LONGVARCHAR"/>
+    <column name="water" phpName="Water" type="LONGVARCHAR"/>
+    <column name="waterway" phpName="Waterway" type="LONGVARCHAR"/>
+    <column name="wetland" phpName="Wetland" type="LONGVARCHAR"/>
+    <column name="width" phpName="Width" type="LONGVARCHAR"/>
+    <column name="wood" phpName="Wood" type="LONGVARCHAR"/>
+    <column name="z_order" phpName="ZOrder" type="INTEGER"/>
+    <column name="way" phpName="Way" type="VARCHAR"/>
+    <index name="planet_osm_point_index">
+      <index-column name="way"/>
+    </index>
+    <index name="planet_osm_point_pkey">
+      <index-column name="osm_id"/>
+    </index>
+  </table>
+  <table name="planet_osm_polygon" idMethod="native" phpName="PlanetOsmPolygon">
+    <column name="osm_id" phpName="OsmId" type="BIGINT"/>
+    <column name="access" phpName="Access" type="LONGVARCHAR"/>
+    <column name="addr:housename" phpName="Addr:housename" type="LONGVARCHAR"/>
+    <column name="addr:housenumber" phpName="Addr:housenumber" type="LONGVARCHAR"/>
+    <column name="addr:interpolation" phpName="Addr:interpolation" type="LONGVARCHAR"/>
+    <column name="admin_level" phpName="AdminLevel" type="LONGVARCHAR"/>
+    <column name="aerialway" phpName="Aerialway" type="LONGVARCHAR"/>
+    <column name="aeroway" phpName="Aeroway" type="LONGVARCHAR"/>
+    <column name="amenity" phpName="Amenity" type="LONGVARCHAR"/>
+    <column name="area" phpName="Area" type="LONGVARCHAR"/>
+    <column name="barrier" phpName="Barrier" type="LONGVARCHAR"/>
+    <column name="bicycle" phpName="Bicycle" type="LONGVARCHAR"/>
+    <column name="brand" phpName="Brand" type="LONGVARCHAR"/>
+    <column name="bridge" phpName="Bridge" type="LONGVARCHAR"/>
+    <column name="boundary" phpName="Boundary" type="LONGVARCHAR"/>
+    <column name="building" phpName="Building" type="LONGVARCHAR"/>
+    <column name="construction" phpName="Construction" type="LONGVARCHAR"/>
+    <column name="covered" phpName="Covered" type="LONGVARCHAR"/>
+    <column name="culvert" phpName="Culvert" type="LONGVARCHAR"/>
+    <column name="cutting" phpName="Cutting" type="LONGVARCHAR"/>
+    <column name="denomination" phpName="Denomination" type="LONGVARCHAR"/>
+    <column name="disused" phpName="Disused" type="LONGVARCHAR"/>
+    <column name="embankment" phpName="Embankment" type="LONGVARCHAR"/>
+    <column name="foot" phpName="Foot" type="LONGVARCHAR"/>
+    <column name="generator:source" phpName="Generator:source" type="LONGVARCHAR"/>
+    <column name="harbour" phpName="Harbour" type="LONGVARCHAR"/>
+    <column name="highway" phpName="Highway" type="LONGVARCHAR"/>
+    <column name="historic" phpName="Historic" type="LONGVARCHAR"/>
+    <column name="horse" phpName="Horse" type="LONGVARCHAR"/>
+    <column name="intermittent" phpName="Intermittent" type="LONGVARCHAR"/>
+    <column name="junction" phpName="Junction" type="LONGVARCHAR"/>
+    <column name="landuse" phpName="Landuse" type="LONGVARCHAR"/>
+    <column name="layer" phpName="Layer" type="LONGVARCHAR"/>
+    <column name="leisure" phpName="Leisure" type="LONGVARCHAR"/>
+    <column name="lock" phpName="Lock" type="LONGVARCHAR"/>
+    <column name="man_made" phpName="ManMade" type="LONGVARCHAR"/>
+    <column name="military" phpName="Military" type="LONGVARCHAR"/>
+    <column name="motorcar" phpName="Motorcar" type="LONGVARCHAR"/>
+    <column name="name" phpName="Name" type="LONGVARCHAR"/>
+    <column name="natural" phpName="Natural" type="LONGVARCHAR"/>
+    <column name="office" phpName="Office" type="LONGVARCHAR"/>
+    <column name="oneway" phpName="Oneway" type="LONGVARCHAR"/>
+    <column name="operator" phpName="Operator" type="LONGVARCHAR"/>
+    <column name="place" phpName="Place" type="LONGVARCHAR"/>
+    <column name="population" phpName="Population" type="LONGVARCHAR"/>
+    <column name="power" phpName="Power" type="LONGVARCHAR"/>
+    <column name="power_source" phpName="PowerSource" type="LONGVARCHAR"/>
+    <column name="public_transport" phpName="PublicTransport" type="LONGVARCHAR"/>
+    <column name="railway" phpName="Railway" type="LONGVARCHAR"/>
+    <column name="ref" phpName="Ref" type="LONGVARCHAR"/>
+    <column name="religion" phpName="Religion" type="LONGVARCHAR"/>
+    <column name="route" phpName="Route" type="LONGVARCHAR"/>
+    <column name="service" phpName="Service" type="LONGVARCHAR"/>
+    <column name="shop" phpName="Shop" type="LONGVARCHAR"/>
+    <column name="sport" phpName="Sport" type="LONGVARCHAR"/>
+    <column name="surface" phpName="Surface" type="LONGVARCHAR"/>
+    <column name="toll" phpName="Toll" type="LONGVARCHAR"/>
+    <column name="tourism" phpName="Tourism" type="LONGVARCHAR"/>
+    <column name="tower:type" phpName="Tower:type" type="LONGVARCHAR"/>
+    <column name="tracktype" phpName="Tracktype" type="LONGVARCHAR"/>
+    <column name="tunnel" phpName="Tunnel" type="LONGVARCHAR"/>
+    <column name="water" phpName="Water" type="LONGVARCHAR"/>
+    <column name="waterway" phpName="Waterway" type="LONGVARCHAR"/>
+    <column name="wetland" phpName="Wetland" type="LONGVARCHAR"/>
+    <column name="width" phpName="Width" type="LONGVARCHAR"/>
+    <column name="wood" phpName="Wood" type="LONGVARCHAR"/>
+    <column name="z_order" phpName="ZOrder" type="INTEGER"/>
+    <column name="way_area" phpName="WayArea" type="REAL" size="24"/>
+    <column name="way" phpName="Way" type="VARCHAR"/>
+    <index name="planet_osm_polygon_index">
+      <index-column name="way"/>
+    </index>
+    <index name="planet_osm_polygon_pkey">
+      <index-column name="osm_id"/>
+    </index>
+  </table>
+  <table name="planet_osm_rels" idMethod="native" phpName="PlanetOsmRels">
+    <column name="id" phpName="Id" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="way_off" phpName="WayOff" type="SMALLINT"/>
+    <column name="rel_off" phpName="RelOff" type="SMALLINT"/>
+    <column name="pending" phpName="Pending" type="BOOLEAN" size="1" required="true"/>
+    <index name="planet_osm_rels_idx">
+      <index-column name="id"/>
+    </index>
+    <index name="planet_osm_rels_parts">
+      <index-column name="parts"/>
+    </index>
+  </table>
+  <table name="planet_osm_roads" idMethod="native" phpName="PlanetOsmRoads">
+    <column name="osm_id" phpName="OsmId" type="BIGINT"/>
+    <column name="access" phpName="Access" type="LONGVARCHAR"/>
+    <column name="addr:housename" phpName="Addr:housename" type="LONGVARCHAR"/>
+    <column name="addr:housenumber" phpName="Addr:housenumber" type="LONGVARCHAR"/>
+    <column name="addr:interpolation" phpName="Addr:interpolation" type="LONGVARCHAR"/>
+    <column name="admin_level" phpName="AdminLevel" type="LONGVARCHAR"/>
+    <column name="aerialway" phpName="Aerialway" type="LONGVARCHAR"/>
+    <column name="aeroway" phpName="Aeroway" type="LONGVARCHAR"/>
+    <column name="amenity" phpName="Amenity" type="LONGVARCHAR"/>
+    <column name="area" phpName="Area" type="LONGVARCHAR"/>
+    <column name="barrier" phpName="Barrier" type="LONGVARCHAR"/>
+    <column name="bicycle" phpName="Bicycle" type="LONGVARCHAR"/>
+    <column name="brand" phpName="Brand" type="LONGVARCHAR"/>
+    <column name="bridge" phpName="Bridge" type="LONGVARCHAR"/>
+    <column name="boundary" phpName="Boundary" type="LONGVARCHAR"/>
+    <column name="building" phpName="Building" type="LONGVARCHAR"/>
+    <column name="construction" phpName="Construction" type="LONGVARCHAR"/>
+    <column name="covered" phpName="Covered" type="LONGVARCHAR"/>
+    <column name="culvert" phpName="Culvert" type="LONGVARCHAR"/>
+    <column name="cutting" phpName="Cutting" type="LONGVARCHAR"/>
+    <column name="denomination" phpName="Denomination" type="LONGVARCHAR"/>
+    <column name="disused" phpName="Disused" type="LONGVARCHAR"/>
+    <column name="embankment" phpName="Embankment" type="LONGVARCHAR"/>
+    <column name="foot" phpName="Foot" type="LONGVARCHAR"/>
+    <column name="generator:source" phpName="Generator:source" type="LONGVARCHAR"/>
+    <column name="harbour" phpName="Harbour" type="LONGVARCHAR"/>
+    <column name="highway" phpName="Highway" type="LONGVARCHAR"/>
+    <column name="historic" phpName="Historic" type="LONGVARCHAR"/>
+    <column name="horse" phpName="Horse" type="LONGVARCHAR"/>
+    <column name="intermittent" phpName="Intermittent" type="LONGVARCHAR"/>
+    <column name="junction" phpName="Junction" type="LONGVARCHAR"/>
+    <column name="landuse" phpName="Landuse" type="LONGVARCHAR"/>
+    <column name="layer" phpName="Layer" type="LONGVARCHAR"/>
+    <column name="leisure" phpName="Leisure" type="LONGVARCHAR"/>
+    <column name="lock" phpName="Lock" type="LONGVARCHAR"/>
+    <column name="man_made" phpName="ManMade" type="LONGVARCHAR"/>
+    <column name="military" phpName="Military" type="LONGVARCHAR"/>
+    <column name="motorcar" phpName="Motorcar" type="LONGVARCHAR"/>
+    <column name="name" phpName="Name" type="LONGVARCHAR"/>
+    <column name="natural" phpName="Natural" type="LONGVARCHAR"/>
+    <column name="office" phpName="Office" type="LONGVARCHAR"/>
+    <column name="oneway" phpName="Oneway" type="LONGVARCHAR"/>
+    <column name="operator" phpName="Operator" type="LONGVARCHAR"/>
+    <column name="place" phpName="Place" type="LONGVARCHAR"/>
+    <column name="population" phpName="Population" type="LONGVARCHAR"/>
+    <column name="power" phpName="Power" type="LONGVARCHAR"/>
+    <column name="power_source" phpName="PowerSource" type="LONGVARCHAR"/>
+    <column name="public_transport" phpName="PublicTransport" type="LONGVARCHAR"/>
+    <column name="railway" phpName="Railway" type="LONGVARCHAR"/>
+    <column name="ref" phpName="Ref" type="LONGVARCHAR"/>
+    <column name="religion" phpName="Religion" type="LONGVARCHAR"/>
+    <column name="route" phpName="Route" type="LONGVARCHAR"/>
+    <column name="service" phpName="Service" type="LONGVARCHAR"/>
+    <column name="shop" phpName="Shop" type="LONGVARCHAR"/>
+    <column name="sport" phpName="Sport" type="LONGVARCHAR"/>
+    <column name="surface" phpName="Surface" type="LONGVARCHAR"/>
+    <column name="toll" phpName="Toll" type="LONGVARCHAR"/>
+    <column name="tourism" phpName="Tourism" type="LONGVARCHAR"/>
+    <column name="tower:type" phpName="Tower:type" type="LONGVARCHAR"/>
+    <column name="tracktype" phpName="Tracktype" type="LONGVARCHAR"/>
+    <column name="tunnel" phpName="Tunnel" type="LONGVARCHAR"/>
+    <column name="water" phpName="Water" type="LONGVARCHAR"/>
+    <column name="waterway" phpName="Waterway" type="LONGVARCHAR"/>
+    <column name="wetland" phpName="Wetland" type="LONGVARCHAR"/>
+    <column name="width" phpName="Width" type="LONGVARCHAR"/>
+    <column name="wood" phpName="Wood" type="LONGVARCHAR"/>
+    <column name="z_order" phpName="ZOrder" type="INTEGER"/>
+    <column name="way_area" phpName="WayArea" type="REAL" size="24"/>
+    <column name="way" phpName="Way" type="VARCHAR"/>
+    <index name="planet_osm_roads_index">
+      <index-column name="way"/>
+    </index>
+    <index name="planet_osm_roads_pkey">
+      <index-column name="osm_id"/>
+    </index>
+  </table>
+  <table name="planet_osm_ways" idMethod="native" phpName="PlanetOsmWays">
+    <column name="id" phpName="Id" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="pending" phpName="Pending" type="BOOLEAN" size="1" required="true"/>
+    <index name="planet_osm_ways_idx">
+      <index-column name="id"/>
+    </index>
+    <index name="planet_osm_ways_nodes">
+      <index-column name="nodes"/>
+    </index>
+  </table>
+  <table name="single_data" idMethod="native" phpName="SingleData">
+    <column name="single_data_id" phpName="SingleDataId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="duration" phpName="Duration" type="BIGINT" required="true" defaultValue="1"/>
+    <column name="position_resolution" phpName="PositionResolution" type="INTEGER"/>
+    <column name="bearing" phpName="Bearing" type="REAL" size="24"/>
+    <column name="date" phpName="Date" type="TIMESTAMP" required="true"/>
+    <column name="osm_line_id" phpName="OsmLineId" type="BIGINT"/>
+    <column name="projection" phpName="Projection" type="VARCHAR"/>
+    <column name="evaluate" phpName="Evaluate" type="SMALLINT" defaultValue="1"/>
+    <column name="debug" phpName="Debug" type="SMALLINT" defaultValue="0"/>
+    <column name="projection_fixed" phpName="ProjectionFixed" type="SMALLINT" required="true" defaultValue="0"/>
+    <column name="ppe" phpName="Ppe" type="DOUBLE" size="53"/>
+    <column name="speed" phpName="Speed" type="DOUBLE" size="53"/>
+    <column name="position" phpName="Position" type="VARCHAR"/>
+    <column name="track_id" phpName="TrackId" type="INTEGER"/>
+    <column name="meta" phpName="Meta" type="ARRAY" required="true"/>
+    <foreign-key foreignTable="track" name="single_data_v2_track_id_fkey" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="track_id" foreign="track_id"/>
+    </foreign-key>
+  </table>
+  <table name="single_data_old" idMethod="native" phpName="SingleDataOld">
+    <column name="single_data_id" phpName="SingleDataId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="duration" phpName="Duration" type="BIGINT" required="true" defaultValue="1"/>
+    <column name="position_resolution" phpName="PositionResolution" type="INTEGER"/>
+    <column name="bearing" phpName="Bearing" type="REAL" size="24"/>
+    <column name="date" phpName="Date" type="TIMESTAMP" required="true"/>
+    <column name="osm_line_id" phpName="OsmLineId" type="BIGINT"/>
+    <column name="projection" phpName="Projection" type="VARCHAR"/>
+    <column name="evaluate" phpName="Evaluate" type="SMALLINT" defaultValue="1"/>
+    <column name="debug" phpName="Debug" type="SMALLINT" defaultValue="0"/>
+    <column name="projection_fixed" phpName="ProjectionFixed" type="SMALLINT" required="true" defaultValue="0"/>
+    <column name="ppe" phpName="Ppe" type="DOUBLE" size="53"/>
+    <column name="speed" phpName="Speed" type="DOUBLE" size="53"/>
+    <column name="position" phpName="Position" type="VARCHAR"/>
+    <column name="track_id" phpName="TrackId" type="VARCHAR" size="255"/>
+    <foreign-key foreignTable="track_old" name="single_data_track_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="track_id" foreign="track_id"/>
+    </foreign-key>
+  </table>
+  <table name="spatial_ref_sys" idMethod="native" phpName="SpatialRefSys">
+    <column name="srid" phpName="Srid" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="auth_name" phpName="AuthName" type="VARCHAR" size="256"/>
+    <column name="auth_srid" phpName="AuthSrid" type="INTEGER"/>
+    <column name="srtext" phpName="Srtext" type="VARCHAR" size="2048"/>
+    <column name="proj4text" phpName="Proj4text" type="VARCHAR" size="2048"/>
+  </table>
+  <table name="temp_pref_bytea" idMethod="native" phpName="TempPrefBytea">
+    <column name="id" phpName="Id" type="BLOB" primaryKey="true" required="true"/>
+    <column name="payload" phpName="Payload" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="temp_pref_int" idMethod="native" phpName="TempPrefInt">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="payload" phpName="Payload" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="temp_pref_varchar" idMethod="native" phpName="TempPrefVarchar">
+    <column name="id" phpName="Id" type="VARCHAR" size="100" primaryKey="true" required="true"/>
+    <column name="payload" phpName="Payload" type="VARCHAR" size="255" required="true"/>
+  </table>
+  <table name="track" idMethod="native" phpName="Track">
+    <column name="metadata" phpName="Metadata" type="VARCHAR" size="1000" required="true"/>
+    <column name="device_id" phpName="DeviceId" type="INTEGER"/>
+    <column name="vehicle_type" phpName="VehicleType" type="INTEGER" defaultValue="0"/>
+    <column name="anchorage_type" phpName="AnchorageType" type="INTEGER" defaultValue="0"/>
+    <column name="secret" phpName="Secret" type="VARCHAR" size="700"/>
+    <column name="date" phpName="Date" type="VARCHAR" defaultExpr="statement_timestamp()"/>
+    <column name="track_id" phpName="TrackId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <foreign-key foreignTable="device" name="track_device_id_fkey1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="device_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="track_metadata_old" idMethod="native" phpName="TrackMetadataOld">
+    <column name="track_id" phpName="TrackId" type="VARCHAR" size="255" primaryKey="true" required="true"/>
+    <column name="metadata" phpName="Metadata" type="VARCHAR" size="1000" required="true"/>
+    <column name="device_id" phpName="DeviceId" type="INTEGER"/>
+    <column name="vehicle_type" phpName="VehicleType" type="INTEGER" defaultValue="0"/>
+    <column name="anchorage_type" phpName="AnchorageType" type="INTEGER" defaultValue="0"/>
+    <column name="secret" phpName="Secret" type="VARCHAR" size="700"/>
+    <foreign-key foreignTable="device" name="track_metadata_device_id_fkey">
+      <reference local="device_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="track_old" idMethod="native" phpName="TrackOld">
+    <column name="metadata" phpName="Metadata" type="VARCHAR" size="1000" required="true"/>
+    <column name="device_id" phpName="DeviceId" type="INTEGER"/>
+    <column name="vehicle_type" phpName="VehicleType" type="INTEGER" defaultValue="0"/>
+    <column name="anchorage_type" phpName="AnchorageType" type="INTEGER" defaultValue="0"/>
+    <column name="secret" phpName="Secret" type="VARCHAR" size="700"/>
+    <column name="track_id" phpName="TrackId" type="VARCHAR" size="50" primaryKey="true" required="true"/>
+    <column name="date" phpName="Date" type="VARCHAR" defaultExpr="statement_timestamp()"/>
+    <foreign-key foreignTable="device" name="track_device_id_fkey" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="device_id" foreign="id"/>
+    </foreign-key>
+  </table>
+</database>

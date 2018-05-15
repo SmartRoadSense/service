@@ -1,0 +1,24 @@
+{
+  "name": "srs/srs_api",
+  "description": "SRS API",
+  "minimum-stability": "dev",
+  "license": "proprietary",
+  "require": {
+    "monolog/monolog": "1.11.*",
+    "phpmailer/phpmailer": "5.2.*",
+    "slim/slim": "2.*",
+    "propel/propel": "~2.0@dev",
+    "rhumsaa/uuid": "~2.8",
+    "moontoast/math": "*",
+    "jmikola/geojson": "~1.0"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "autoload": {
+    "classmap": ["/code/generated-classes/"],
+    "psr-0": {
+      "Srs": "/code/api/lib/"
+    }
+  }
+}

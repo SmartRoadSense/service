@@ -1,0 +1,106 @@
+# Common config
+version: '2'
+volumes:
+  blog_data: {}
+  osm_data: {}
+services:
+  web:
+    container_name: web
+    build: ./web
+    volumes:
+    - ./web:/open_data:ro
+    - ./ui/dist:/code:ro
+    - ./blog:/www/blog:rw
+    depends_on: [tiles, ui, blog, ws, api, osm-tiles]
+    restart: always
+
+  blog:
+    container_name: blog
+    build: ./blog
+    volumes: ['./blog:/code/blog:rw']
+    depends_on: [blog-db]
+    restart: always
+
+  blog-db:
+    container_name: blog-db
+    build: ./blog/db
+    volumes: ['blog_data:/var/lib/mysql:rw']
+    restart: always
+
+  ui:
+    container_name: ui
+    build: ./ui
+    volumes: ['./ui:/code:rw']
+
+  tiles:
+    container_name: tiles
+    build: ./tiles
+    command: nodemon server.js
+    volumes: ['./tiles:/code:ro']
+    ports: ['127.0.0.1:8000:8000']
+    depends_on: [ws]
+    restart: always
+
+  agg-cli:
+    container_name: agg-cli
+    build: ./agg/cli
+    volumes: ['./agg/cli:/code:rw']
+
+  agg-web:
+    container_name: agg-web
+    build: ./agg/web
+    restart: always
+
+  raw-cli:
+    container_name: raw-cli
+    build: ./raw/cli
+    volumes: ['./raw/cli:/code:rw', './data:/data:rw']
+
+  raw-web:
+    container_name: raw-web
+    build: ./raw/web
+    restart: always
+    restart: always
+
+  ws:
+    container_name: ws
+    build: ./ws
+    volumes: ['./ws:/code/ws:rw']
+    restart: always
+
+  api:
+    container_name: api
+    build: ./api
+    volumes: ['./api:/code/api:rw']
+    restart: always
+    restart: always
+
+  map-reduce:
+    container_name: map-reduce
+    build: ./jobs/map-reduce
+    volumes: ['./jobs/map-reduce:/code:ro']
+
+  meta-updater:
+    container_name: meta-updater
+    build: ./jobs/meta-updater/
+    volumes: ['./jobs/meta-updater:/code:ro']
+
+  osm-tiles:
+    container_name: osm-tiles
+    #image: smartroadsense/osm-tiles
+    build: ./osm/tiles
+    depends_on: [osm-db]
+    restart: always
+
+  osm-cli:
+    container_name: osm-cli
+    build: ./osm/cli
+    volumes: ['./osm/cli:/code:rw', './data:/data:rw']
+    depends_on: [osm-db]
+
+  osm-db:
+    container_name: osm-db
+    build: ./osm/db
+    volumes: ['osm_data:/var/lib/postgresql/data/srs:rw']
+    ports: ['127.0.0.1:5434:5432']
+    restart: always

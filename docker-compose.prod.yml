@@ -1,0 +1,43 @@
+# Production-specific config
+version: '2'
+services:
+  web:
+    ports: ['0.0.0.0:80:8080']
+    volumes:
+    - ./web/prod.conf:/etc/nginx/conf.d/site.conf:ro
+    - /tmp/tiles:/tmp/tiles:rw
+    - /tmp/osm_tiles:/tmp/osm_tiles:rw
+
+  tiles:
+    env_file: config.env
+
+  agg-cli:
+    env_file: config.env
+  agg-web:
+    ports: ['0.0.0.0:9001:80']
+    env_file: config.env
+
+  raw-cli:
+    env_file: config.env
+  raw-web:
+    ports: ['0.0.0.0:9002:80']
+    env_file: config.env
+
+  ws:
+    env_file: config.env
+
+  api:
+    env_file: config.env
+
+  map-reduce:
+    env_file: config.env
+
+  meta-updater:
+    env_file: config.env
+
+  osm-tiles:
+    #env_file: config.env
+  osm-cli:
+    #env_file: config.env
+  osm-db:
+    #env_file: config.env

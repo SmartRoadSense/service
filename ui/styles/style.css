@@ -1,0 +1,143 @@
+/*
+	CARTO DB CUSTOM STYLES
+*/
+
+html, body {
+	height: 100%;
+  width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body{
+	 font-family: "Helvetica", Arial;
+    font-size: 13px;
+    color: #444;
+}
+
+#map {
+	height: 100%;
+	width: 100%;
+	margin: 50px 0px 0px 0px;
+}
+#layer_selector {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0;
+}
+
+#layer_selector ul, #sublayer_selector ul {
+  padding: 0; margin: 0;
+  list-style-type: none;
+}
+
+#layer_selector li, #sublayer_selector li {
+  border-bottom: 1px solid #999;
+  padding: 5px 10px;
+  font-family: "Helvetica", Arial;
+  font-size: 13px;
+  color: #444;
+  cursor: auto;
+  height: 20px;
+}
+
+#layer_selector li:hover, #sublayer_selector li:hover {
+  background-color: #F0F0F0;
+  cursor: pointer;
+}
+
+#layer_selector li.selected, #sublayer_selector li.selected {
+  background-color: #EEE;
+}
+
+#layer_selector li *{
+  display: inline-block;
+  float: left;
+  line-height: 20px;
+}
+
+
+.marker-box{
+  height: 20px;
+}
+
+.marker {
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  border: 1px solid grey;
+  line-height: 100%;
+  margin: 7px 0 0 8px;
+}
+
+.marker.ppe01{
+  background-color: #008000;
+}
+
+.marker.ppe02{
+  background-color: rgb(157,215,0);
+}
+
+
+.marker.ppe03{
+  background-color: rgb(138,205,0);
+}
+.marker.ppe04{
+  background-color: rgb(201,236,0);
+}
+.marker.ppe05{
+  background-color: rgb(223,246,0);
+}
+.marker.ppe06{
+  background-color: rgb(255,255,0);
+}
+.marker.ppe07{
+  background-color: rgb(255,215,0);
+}
+.marker.ppe08{
+  background-color: rgb(255,184,0);
+}
+.marker.ppe09{
+  background-color: rgb(255,160,0);
+}
+.marker.ppe10{
+  background-color: rgb(255,140,0);
+}
+.marker.ppe15{
+  background-color: rgb(253,86,2);
+}
+.marker.ppe20{
+  background-color: rgb(246,25,1);
+}
+.marker.ppe25{
+  background-color: red;
+}
+
+#sublayer_selector{
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    padding: 0;
+}
+
+h1{
+  position: absolute;
+  top: 0px;
+  left: 90px;
+  font-size: 30px;
+  z-index: 5;
+}
+
+#panel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  margin-left: -180px;
+  margin-top: 50px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
