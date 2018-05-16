@@ -1,36 +1,25 @@
 # Common config
 version: '2'
 volumes:
-  blog_data: {}
-  osm_data: {}
+  web_data: {}
 services:
   web:
     container_name: web
     build: ./web
     volumes:
-    - ./web:/open_data:ro
-    - ./ui/dist:/code:ro
-    - ./blog:/www/blog:rw
-    depends_on: [tiles, ui, blog, ws, api, osm-tiles]
-    restart: always
-
-  blog:
-    container_name: blog
-    build: ./blog
-    volumes: ['./blog:/code/blog:rw']
-    depends_on: [blog-db]
-    restart: always
-
-  blog-db:
-    container_name: blog-db
-    build: ./blog/db
-    volumes: ['blog_data:/var/lib/mysql:rw']
+    - web_data:/www:ro
+    depends_on:
+    - tiles
+    - ui
+    - ws
+    - api
     restart: always
 
   ui:
     container_name: ui
     build: ./ui
-    volumes: ['./ui:/code:rw']
+    volumes:
+      - web_data:/code:rw
 
   tiles:
     container_name: tiles
@@ -44,7 +33,8 @@ services:
   agg-cli:
     container_name: agg-cli
     build: ./agg/cli
-    volumes: ['./agg/cli:/code:rw']
+    volumes:
+    - ./agg/cli:/code:rw
 
   agg-web:
     container_name: agg-web
@@ -84,23 +74,3 @@ services:
     container_name: meta-updater
     build: ./jobs/meta-updater/
     volumes: ['./jobs/meta-updater:/code:ro']
-
-  osm-tiles:
-    container_name: osm-tiles
-    #image: smartroadsense/osm-tiles
-    build: ./osm/tiles
-    depends_on: [osm-db]
-    restart: always
-
-  osm-cli:
-    container_name: osm-cli
-    build: ./osm/cli
-    volumes: ['./osm/cli:/code:rw', './data:/data:rw']
-    depends_on: [osm-db]
-
-  osm-db:
-    container_name: osm-db
-    build: ./osm/db
-    volumes: ['osm_data:/var/lib/postgresql/data/srs:rw']
-    ports: ['127.0.0.1:5434:5432']
-    restart: always

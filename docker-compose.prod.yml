@@ -4,7 +4,7 @@ services:
   web:
     ports: ['0.0.0.0:80:8080']
     volumes:
-    - ./web/prod.conf:/etc/nginx/conf.d/site.conf:ro
+    - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
     - /tmp/tiles:/tmp/tiles:rw
     - /tmp/osm_tiles:/tmp/osm_tiles:rw
 
@@ -34,10 +34,3 @@ services:
 
   meta-updater:
     env_file: config.env
-
-  osm-tiles:
-    #env_file: config.env
-  osm-cli:
-    #env_file: config.env
-  osm-db:
-    #env_file: config.env

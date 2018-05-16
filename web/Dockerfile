@@ -1,3 +1,9 @@
-FROM smartroadsense/nginx:latest
+FROM nginx:1.14.0-alpine
 
-COPY prod.conf /etc/nginx/conf.d/site.conf
+RUN chmod 777 /var/cache/nginx
+
+# Copy and overwrite configuration files
+RUN rm -rf /etc/nginx/conf.d/*
+COPY proxy_params nginx.conf /etc/nginx/
+
+USER nginx
