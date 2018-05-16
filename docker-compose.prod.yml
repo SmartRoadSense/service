@@ -10,6 +10,9 @@ services:
 
   tiles:
     env_file: config.env
+  ui:
+    environment:
+    - HUGO_BASEURL=http://www.smartroadsense.it/
 
   agg-cli:
     env_file: config.env

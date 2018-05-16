@@ -1,9 +1,6 @@
-FROM jekyll/jekyll
+FROM jojomi/hugo:0.40.3
 
-# Cleanup output directory
-RUN rm -rf /code/*
+COPY ./build-static-site.sh /build-static-site.sh
+RUN chmod 0777 /build-static-site.sh
 
-COPY . /code
-WORKDIR /code
-
-CMD ["exit"]
+CMD ["/build-static-site.sh"]

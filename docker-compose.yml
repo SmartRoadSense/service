@@ -20,7 +20,7 @@ services:
     container_name: ui
     build: ./ui
     volumes:
-      - web_data:/code:rw
+    - web_data:/output:rw
 
   tiles:
     container_name: tiles

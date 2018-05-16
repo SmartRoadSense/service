@@ -8,6 +8,9 @@ services:
     ports: ['127.0.0.1:8080:8080']
     volumes:
     - ./web/dev.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
+  ui:
+    environment:
+    - HUGO_BASEURL=http://smartroadsense.uniurb.it/
 
   agg-cli:
     depends_on: [agg-db]
