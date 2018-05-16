@@ -25,6 +25,7 @@ services:
   tiles:
     container_name: tiles
     build: ./tiles
+    env_file: config.env
     command: nodemon server.js
     volumes: ['./tiles:/code:ro']
     ports: ['127.0.0.1:8000:8000']
@@ -34,45 +35,49 @@ services:
   agg-cli:
     container_name: agg-cli
     build: ./agg/cli
+    env_file: config.env
     volumes:
     - ./agg/cli:/code:rw
     - ./data:/data:rw
-
   agg-web:
     container_name: agg-web
     build: ./agg/web
+    env_file: config.env
     restart: always
 
   raw-cli:
     container_name: raw-cli
     build: ./raw/cli
+    env_file: config.env
     volumes: ['./raw/cli:/code:rw', './data:/data:rw']
-
   raw-web:
     container_name: raw-web
     build: ./raw/web
-    restart: always
+    env_file: config.env
     restart: always
 
   ws:
     container_name: ws
     build: ./ws
+    env_file: config.env
     volumes: ['./ws:/code/ws:rw']
     restart: always
 
   api:
     container_name: api
     build: ./api
+    env_file: config.env
     volumes: ['./api:/code/api:rw']
-    restart: always
     restart: always
 
   map-reduce:
     container_name: map-reduce
     build: ./jobs/map-reduce
+    env_file: config.env
     volumes: ['./jobs/map-reduce:/code:ro']
 
   meta-updater:
     container_name: meta-updater
     build: ./jobs/meta-updater/
+    env_file: config.env
     volumes: ['./jobs/meta-updater:/code:ro']

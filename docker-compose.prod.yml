@@ -8,32 +8,12 @@ services:
     - /tmp/tiles:/tmp/tiles:rw
     - /tmp/osm_tiles:/tmp/osm_tiles:rw
 
-  tiles:
-    env_file: config.env
   ui:
     environment:
     - HUGO_BASEURL=http://www.smartroadsense.it/
 
-  agg-cli:
-    env_file: config.env
   agg-web:
-    ports: ['0.0.0.0:9001:80']
-    env_file: config.env
+    ports: ['127.0.0.1:9001:80']
 
-  raw-cli:
-    env_file: config.env
   raw-web:
-    ports: ['0.0.0.0:9002:80']
-    env_file: config.env
-
-  ws:
-    env_file: config.env
-
-  api:
-    env_file: config.env
-
-  map-reduce:
-    env_file: config.env
-
-  meta-updater:
-    env_file: config.env
+    ports: ['127.0.0.1:9002:80']
