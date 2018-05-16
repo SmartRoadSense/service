@@ -173,7 +173,6 @@ history:
 .PHONY: open_data
 open_data:
 	${DC_RUN} agg-cli ./update_open_data.sh
-	mv agg/cli/open_data.zip web/open_data.zip
 
 .PHONY:	reset_projs
 reset_projs:

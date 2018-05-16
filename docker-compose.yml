@@ -8,6 +8,7 @@ services:
     build: ./web
     volumes:
     - web_data:/www:ro
+    - ./data:/data:ro
     depends_on:
     - tiles
     - ui
@@ -35,6 +36,7 @@ services:
     build: ./agg/cli
     volumes:
     - ./agg/cli:/code:rw
+    - ./data:/data:rw
 
   agg-web:
     container_name: agg-web
