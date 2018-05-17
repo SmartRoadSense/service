@@ -1,45 +1,47 @@
 # Development-specific config
 version: '2'
-volumes:
- raw_data: {}
- agg_data: {}
 services:
   web:
-    ports: ['127.0.0.1:8080:8080']
-    volumes: ['./web/dev.conf:/etc/nginx/conf.d/site.conf:ro']
+    ports: ['0.0.0.0:80:8080']
+    volumes:
+    - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
+
+  ui:
+    environment:
+    - HUGO_BASEURL=http://smartroadsense.uniurb.it/
 
   agg-cli:
-    depends_on: [agg-db]
+  #  depends_on: [agg-db]
   agg-web:
-    ports: ['127.0.0.1:9001:80']
-    depends_on: [agg-db]
-  agg-db:
-    container_name: agg-db
-    build: ./agg/db
-    volumes: ['agg_data:/var/lib/postgresql/data/srs:rw']
-    ports: ['127.0.0.1:5433:5432']
-    restart: always
+    ports: ['0.0.0.0:9001:80']
+  #  depends_on: [agg-db]
+  #agg-db:
+  #  container_name: agg-db
+  #  build: ./agg/db
+  #  volumes: ['agg_data:/var/lib/postgresql/data/srs:rw']
+  #  ports: ['127.0.0.1:5433:5432']
+  #  restart: always
 
   raw-cli:
-    depends_on: [raw-db]
+  #  depends_on: [raw-db]
   raw-web:
-    ports: ['127.0.0.1:9002:80']
-    depends_on: [raw-db]
-  raw-db:
-    container_name: raw-db
-    build: ./raw/db
-    volumes: ['raw_data:/var/lib/postgresql/data/srs:rw']
-    ports: ['127.0.0.1:5431:5432']
-    restart: always
+    ports: ['0.0.0.0:9002:80']
+  #  depends_on: [raw-db]
+  #raw-db:
+  #  container_name: raw-db
+  #  build: ./raw/db
+  #  volumes: ['raw_data:/var/lib/postgresql/data/srs:rw']
+  #  ports: ['127.0.0.1:5431:5432']
+  #  restart: always
 
   ws:
-    depends_on: [agg-db]
+  #  depends_on: [agg-db]
 
   api:
-    depends_on: [raw-db]
+  #  depends_on: [raw-db]
 
   map-reduce:
-    depends_on: [raw-db, agg-db]
+  #  depends_on: [raw-db, agg-db]
 
   meta-updater:
-    depends_on: [agg-db]
+  #  depends_on: [agg-db]

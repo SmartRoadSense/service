@@ -1,4 +1,6 @@
-data
+data/*
+!data/placeholder
 config.env
 *.pbf*
 .idea/*
+.vscode/*

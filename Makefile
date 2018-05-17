@@ -15,17 +15,11 @@ fmt:
 data:
 	mkdir data
 
-blog/data.sql:
-	xz -kd blog/data.sql.xz
-
-blog/index.php:
-	tar -xf blog/blog.tar.xz
-
 test/payload.json:
 	gzip -kd test/payload.json.gz
 
 .PHONY: up
-up: data blog/data.sql blog/index.php build
+up: data build
 	${DC} up -d
 	${DC} ps
 	@echo
@@ -44,7 +38,7 @@ ps:
 	${DC} ps
 
 .PHONY: init init_raw init_agg
-init: init_raw init_agg import_blog
+init: init_raw init_agg
 
 init_raw:
 	${DC_RUN} raw-cli /code/init.sh
@@ -91,8 +85,8 @@ fetch_region_%: data clean_pbf
 
 fetch_italy: fetch_eu_italy
 
-.PHONY: import_example import_italy import import_raw import_agg import_blog import_osm
-import: import_raw import_agg import_blog
+.PHONY: import_example import_italy import import_raw import_agg import_osm
+import: import_raw import_agg
 
 import_example: fetch_example import_osm
 import_italy: fetch_italy import_osm
@@ -103,9 +97,6 @@ import_raw:
 import_agg:
 	${DC_RUN} agg-cli psql -f /code/data.sql
 
-import_blog:
-	${DC_RUN} blog bash -c 'mysql -u crowd4roads_sw srs_blog_db < /code/blog/data.sql'
-
 import_osm:
 	${DC_RUN} raw-cli ./import_osm.sh
 	${DC_RUN} osm-cli ./import_osm.sh
@@ -115,17 +106,14 @@ export_osm:
 	${DC_RUN} raw-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 	${DC_RUN} osm-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 
-.PHONY: export export_raw export_agg export_blog
-export: export_raw export_agg export_blog
+.PHONY: export export_raw export_agg
+export: export_raw export_agg
 
 export_raw:
 	${DC_RUN} raw-cli pg_dump -a -T 'planet_osm*' -f /code/data.sql
 
 export_agg:
 	${DC_RUN} agg-cli pg_dump -a -f /code/data.sql
-
-export_blog:
-	${DC_RUN} blog mysqldump -h blog-db -u crowd4roads_sw -r /code/blog/data.sql srs_blog_db
 
 .PHONY: rs
 rs:
@@ -159,7 +147,7 @@ raw-cli:
 	${DC_RUN} raw-cli pgcli
 
 .PHONY:	raw-projections-reset
-raw-projections-reset:	
+raw-projections-reset:
 	${DC_RUN} map-reduce php /code/reset_projections.php
 
 .PHONY: agg-cli
@@ -169,10 +157,6 @@ agg-cli:
 .PHONY: osm-cli
 osm-cli:
 	${DC_RUN} osm-cli pgcli
-
-.PHONY: blog_cli
-blog_cli:
-	${DC_RUN} blog mycli -u crowd4roads_sw -D srs_blog_db
 
 .PHONY: update_meta
 update_meta: jobs/meta-updater/meta-updater
@@ -189,7 +173,6 @@ history:
 .PHONY: open_data
 open_data:
 	${DC_RUN} agg-cli ./update_open_data.sh
-	mv agg/cli/open_data.zip web/open_data.zip
 
 .PHONY:	reset_projs
 reset_projs:
@@ -211,8 +194,8 @@ test/boom:
 	docker run --rm -it -v $${PWD}/test:/code michelesr/gopg:latest env CGO_ENABLED=0 \
 	  bash -c 'go get github.com/michelesr/boom && cp `which boom` .'
 
-.PHONY: clean clean_go clean_raw clean_ui clean_blog clean_data
-clean: clean_go clean_raw clean_ui clean_blog clean_data clean_pbf
+.PHONY: clean clean_go clean_raw clean_ui clean_data
+clean: clean_go clean_raw clean_ui clean_data clean_pbf
 
 clean_go:
 	rm -f jobs/meta-updater/meta-updater
@@ -221,10 +204,6 @@ clean_go:
 clean_raw:
 	rm -f raw/*.pbf
 	rm -f raw/*.md5
-
-clean_blog:
-	rm -rf blog/{wp-*,uwicbot}
-	rm -rf blog/*.{html,php,sql,txt}
 
 clean_data:
 	rm -rf data/
