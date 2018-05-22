@@ -106,7 +106,7 @@ export_osm:
 	${DC_RUN} raw-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 	${DC_RUN} osm-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 
-.PHONY: export export_raw export_agg
+.PHONY: export export_raw export_agg export_single_data_as_JSON
 export: export_raw export_agg
 
 export_raw:
@@ -114,6 +114,9 @@ export_raw:
 
 export_agg:
 	${DC_RUN} agg-cli pg_dump -a -f /code/data.sql
+
+export_single_data_as_JSON:
+	${DC_RUN} raw-cli psql  -c 'select st_asgeojson(st_collect(position)) from single_data;' -o /code/single_data.json
 
 .PHONY: rs
 rs:
