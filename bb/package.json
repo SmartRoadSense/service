@@ -1,0 +1,20 @@
+{
+  "name": "srs-bb-api",
+  "version": "1.0.0",
+  "description": "A simple API for SmartRoadSense",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Saverio Delpriori <saverio.delpriori@uniurb.it>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "memory-cache": "^0.2.0",
+    "node-constants": "0.0.2",
+    "pg": "^7.4.1",
+    "util": "0.10.3"
+  }
+}
