@@ -56,6 +56,13 @@ services:
     env_file: config.env
     restart: always
 
+  bb:
+    container_name: bb
+    build: ./bb
+    env_file: config.env
+    ports: ['127.0.0.1:8080:8080']
+    restart: always
+
   ws:
     container_name: ws
     build: ./ws
