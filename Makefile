@@ -177,6 +177,10 @@ history:
 open_data:
 	${DC_RUN} agg-cli ./update_open_data.sh
 
+.PHONY: website
+website:
+	${DC_RUN} ui
+
 .PHONY:	reset_projs
 reset_projs:
 	${DC_RUN} map-reduce php /code/reset_projections.php
