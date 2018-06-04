@@ -20,7 +20,6 @@ services:
   #  build: ./agg/db
   #  volumes: ['agg_data:/var/lib/postgresql/data/srs:rw']
   #  ports: ['127.0.0.1:5433:5432']
-  #  restart: always
 
   raw-cli:
   #  depends_on: [raw-db]
@@ -32,7 +31,6 @@ services:
   #  build: ./raw/db
   #  volumes: ['raw_data:/var/lib/postgresql/data/srs:rw']
   #  ports: ['127.0.0.1:5431:5432']
-  #  restart: always
 
   export:
   #  depends_on: [raw-db, agg-db]

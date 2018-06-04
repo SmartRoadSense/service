@@ -18,7 +18,6 @@ services:
     - ui
     - ws
     - api
-    restart: always
 
   ui:
     container_name: ui
@@ -34,7 +33,6 @@ services:
     volumes: ['./tiles:/code:ro']
     ports: ['127.0.0.1:8000:8000']
     depends_on: [ws]
-    restart: always
 
   agg-cli:
     container_name: agg-cli
@@ -46,7 +44,6 @@ services:
     container_name: agg-web
     build: ./agg/web
     env_file: config.env
-    restart: always
 
   raw-cli:
     container_name: raw-cli
@@ -58,7 +55,6 @@ services:
     container_name: raw-web
     build: ./raw/web
     env_file: config.env
-    restart: always
 
   export:
     container_name: export
@@ -71,21 +67,18 @@ services:
     build: ./bb
     env_file: config.env
     ports: ['127.0.0.1:8080:8080']
-    restart: always
 
   ws:
     container_name: ws
     build: ./ws
     env_file: config.env
     volumes: ['./ws:/code/ws:rw']
-    restart: always
 
   api:
     container_name: api
     build: ./api
     env_file: config.env
     volumes: ['./api:/code/api:rw']
-    restart: always
 
   map-reduce:
     container_name: map-reduce
