@@ -1,5 +1,5 @@
 # Production-specific config
-version: '2'
+version: '3'
 services:
   web:
     ports: ['0.0.0.0:80:8080']

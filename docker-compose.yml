@@ -1,14 +1,18 @@
 # Common config
-version: '2'
+version: '3'
 volumes:
-  web_data: {}
+  srs_web_data:
+    external: true
+  srs_open_data:
+    external: true
+
 services:
   web:
     container_name: web
     build: ./web
     volumes:
-    - web_data:/www:ro
-    - ./data:/data:ro
+    - srs_web_data:/www:ro
+    - srs_open_data:/opendata:ro
     depends_on:
     - tiles
     - ui
@@ -20,7 +24,7 @@ services:
     container_name: ui
     build: ./ui
     volumes:
-    - web_data:/target:rw
+    - srs_web_data:/target:rw
 
   tiles:
     container_name: tiles
@@ -37,8 +41,7 @@ services:
     build: ./agg/cli
     env_file: config.env
     volumes:
-    - ./agg/cli:/code:rw
-    - ./data:/data:rw
+    - srs_open_data:/opendata:rw
   agg-web:
     container_name: agg-web
     build: ./agg/web
@@ -49,7 +52,8 @@ services:
     container_name: raw-cli
     build: ./raw/cli
     env_file: config.env
-    volumes: ['./raw/cli:/code:rw', './data:/data:rw']
+    volumes:
+    - ./raw/cli:/code:rw
   raw-web:
     container_name: raw-web
     build: ./raw/web
