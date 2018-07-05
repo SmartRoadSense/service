@@ -6,4 +6,5 @@ RUN chmod 777 /var/cache/nginx
 RUN rm -rf /etc/nginx/conf.d/*
 COPY proxy_params nginx.conf /etc/nginx/
 
-USER nginx
+# Drop root privileges, maps to `systemd-network` user on local dev & prod system
+USER 101:101
