@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 namespace TileServer {
 
     public class Startup {
+
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
