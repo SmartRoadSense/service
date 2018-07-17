@@ -32,6 +32,8 @@ namespace TileServer.Controllers {
 
         public const int TileSize = 256;
 
+        private static readonly Rgba32 ShadowColor = new Rgba32(0.04f, 0.02f, 0.1f, 0.6f);
+
         private async Task<IEnumerable<(Coordinate coord, double ppe)>> FetchFeatures(BoundingBox bbox, int zoom) {
             string url = string.Format(
                 System.Globalization.CultureInfo.InvariantCulture,
@@ -62,23 +64,30 @@ namespace TileServer.Controllers {
         }
 
         private Stream DrawFeatures(BoundingBox bbox, int zoom, IEnumerable<(Coordinate coord, double ppe)> features) {
+            // Convert features from lat/long to tile pixel coordinates
             var swPx = Mercator.ToPixels(bbox.SouthWest, zoom);
             var nePx = Mercator.ToPixels(bbox.NorthEast, zoom);
+            var pixelFeatures = from f in features
+                                let coordPx = Mercator.ToPixels(f.coord, zoom)
+                                select ((float)(coordPx.x - swPx.x), (float)(coordPx.y - nePx.y), f.ppe);
 
+            float dotRadius = zoom / 2f;
+
+            // Compose image data
             var responseStream = new MemoryStream();
             using (Image<Rgba32> i = new Image<Rgba32>(TileSize, TileSize)) {
                 i.Mutate(ctx => {
-                    foreach(var f in features) {
-                        var coordPx = Mercator.ToPixels(f.coord, zoom);
-                        var featX = (float)(coordPx.x - swPx.x);
-                        var featY = (float)(coordPx.y - nePx.y);
+                    foreach(var f in pixelFeatures) {
+                        ctx.Fill(ShadowColor, new EllipsePolygon(f.Item1, f.Item2, dotRadius * 1.2f));
+                    }
 
-                        var ellipse = new EllipsePolygon(featX, featY, zoom / 2f);
-                        ctx.Fill(Rgba32.Red, ellipse);
+                    foreach(var f in pixelFeatures) {
+                        var ellipse = new EllipsePolygon(f.Item1, f.Item2, dotRadius);
+                        ctx.Fill(PpeColorMapper.Map(f.ppe), ellipse);
                     }
                 });
 
-                // Write image to stream
+                // Write down to stream
                 i.Save(responseStream, new PngEncoder());
                 responseStream.Position = 0;
             }
@@ -88,6 +97,10 @@ namespace TileServer.Controllers {
 
         [HttpGet("{zoom}/{x}/{y}")]
         public async Task<ActionResult> Get(int zoom, double x, double y) {
+            if(zoom < 1 ) {
+                return BadRequest();
+            }
+
             _logger.LogInformation("Getting tile {x},{y} zoom {zoom}", x, y, zoom);
 
             var bbox = Mercator.CreateBoundingBox(x, y, zoom);
