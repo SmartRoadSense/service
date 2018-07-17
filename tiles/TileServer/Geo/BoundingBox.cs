@@ -31,6 +31,15 @@ namespace TileServer.Geo {
             }
         }
 
+        public BoundingBox Expand(double offset) {
+            return new BoundingBox(
+                West - offset,
+                South - offset,
+                East + offset,
+                North + offset
+            );
+        }
+
     }
 
 }

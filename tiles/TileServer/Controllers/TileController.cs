@@ -6,7 +6,6 @@ using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Drawing;
-using SixLabors.ImageSharp.Processing.Text;
 using SixLabors.Shapes;
 using System;
 using System.Collections.Generic;
@@ -63,11 +62,8 @@ namespace TileServer.Controllers {
         }
 
         private Stream DrawFeatures(BoundingBox bbox, int zoom, IEnumerable<(Coordinate coord, double ppe)> features) {
-            _logger.LogDebug("Geo bounds {0},{1},{2},{3}", bbox.SouthWest.Latitude, bbox.SouthWest.Longitude, bbox.NorthEast.Latitude, bbox.NorthEast.Longitude);
-
             var swPx = Mercator.ToPixels(bbox.SouthWest, zoom);
             var nePx = Mercator.ToPixels(bbox.NorthEast, zoom);
-            _logger.LogDebug("Tile bounds {w},{s},{e},{n} px", swPx.x, swPx.y, nePx.x, nePx.y);
 
             var responseStream = new MemoryStream();
             using (Image<Rgba32> i = new Image<Rgba32>(TileSize, TileSize)) {
@@ -76,8 +72,6 @@ namespace TileServer.Controllers {
                         var coordPx = Mercator.ToPixels(f.coord, zoom);
                         var featX = (float)(coordPx.x - swPx.x);
                         var featY = (float)(coordPx.y - nePx.y);
-
-                        _logger.LogDebug("Feature {x},{y} => {pxx},{pxy} => {featX},{featY}", f.coord.Latitude, f.coord.Longitude, coordPx.x, coordPx.y, featX, featY);
 
                         var ellipse = new EllipsePolygon(featX, featY, zoom / 2f);
                         ctx.Fill(Rgba32.Red, ellipse);
@@ -97,12 +91,13 @@ namespace TileServer.Controllers {
             _logger.LogInformation("Getting tile {x},{y} zoom {zoom}", x, y, zoom);
 
             var bbox = Mercator.CreateBoundingBox(x, y, zoom);
-            _logger.LogDebug("Bounding box [{w},{s},{e},{n}]", bbox.West, bbox.South, bbox.East, bbox.North);
+            _logger.LogDebug("Tile bounding box [{w},{s},{e},{n}]", bbox.West, bbox.South, bbox.East, bbox.North);
 
-            // TODO: expand bounding box with offset to get all points
+            var bboxOffset = 16 / Math.Pow(2, zoom);
+            var bboxExt = bbox.Expand(bboxOffset);
 
-            var features = await FetchFeatures(bbox, zoom);
-            _logger.LogInformation("Drawing {count} features on tile", features.Count());
+            var features = await FetchFeatures(bboxExt, zoom);
+            _logger.LogDebug("Drawing {count} features on tile", features.Count());
 
             var responseStream = DrawFeatures(bbox, zoom, features);
             return File(responseStream, "image/png");
