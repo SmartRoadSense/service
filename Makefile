@@ -201,7 +201,7 @@ test/boom:
 	docker run --rm -it -v $${PWD}/test:/code michelesr/gopg:latest env CGO_ENABLED=0 \
 	  bash -c 'go get github.com/michelesr/boom && cp `which boom` .'
 
-.PHONY: clean clean_go clean_raw clean_ui clean_data
+.PHONY: clean clean_go clean_raw clean_ui clean_data clean_images
 clean: clean_go clean_raw clean_ui clean_data clean_pbf
 
 clean_go:
@@ -219,3 +219,5 @@ clean_pbf:
 	rm -rf *.pbf*
 	rm -rf data/map.osm
 
+clean_images:
+	docker rmi $(docker images -f "dangling=true" -q)

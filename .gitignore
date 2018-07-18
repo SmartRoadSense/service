@@ -3,4 +3,9 @@ data/*
 config.env
 *.pbf*
 .idea/*
-.vscode/*
+**/.vscode/*
+**/.vs/*
+*.leu
+**/bin/*
+**/obj/*
+*.csproj.user

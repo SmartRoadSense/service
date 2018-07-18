@@ -10,6 +10,10 @@ services:
     environment:
     - HUGO_BASEURL=http://smartroadsense.uniurb.it/
 
+  tiles:
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+
   agg-cli:
   #  depends_on: [agg-db]
   agg-web:
