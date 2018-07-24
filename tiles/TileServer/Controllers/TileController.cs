@@ -65,11 +65,11 @@ namespace TileServer.Controllers {
 
         private Stream DrawFeatures(BoundingBox bbox, int zoom, IEnumerable<(Coordinate coord, double ppe)> features) {
             // Convert features from lat/long to tile pixel coordinates
-            var swPx = Mercator.ToPixels(bbox.SouthWest, zoom);
-            var nePx = Mercator.ToPixels(bbox.NorthEast, zoom);
+            (int westPx, _) = Mercator.ToPixels(bbox.SouthWest, zoom);
+            (_, int northPx) = Mercator.ToPixels(bbox.NorthEast, zoom);
             var pixelFeatures = from f in features
                                 let coordPx = Mercator.ToPixels(f.coord, zoom)
-                                select ((float)(coordPx.x - swPx.x), (float)(coordPx.y - nePx.y), f.ppe);
+                                select ((float)(coordPx.x - westPx), (float)(coordPx.y - northPx), f.ppe);
 
             float dotRadius = zoom / 2f;
 
