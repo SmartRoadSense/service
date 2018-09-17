@@ -107,7 +107,7 @@ class SrsAggregateDB {
         return $updatedValues;
     }
 
-    public function SRS_History_Step($limit = 2000000){
+    public function SRS_History_Step($limit = 50000000){
         $query = "SELECT srs_current_to_history($limit);";
 
         $result = pg_query($this -> conn, $query);
