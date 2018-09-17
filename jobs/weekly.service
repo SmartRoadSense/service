@@ -1,5 +1,6 @@
 [Unit]
 Description=Weekly job service
+Conflicts=6h.service
 
 [Service]
 Type=oneshot
