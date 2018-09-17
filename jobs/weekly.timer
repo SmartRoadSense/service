@@ -1,6 +1,5 @@
 [Unit]
 Description=Weekly job timer
-Conflicts=6h.service
 
 [Timer]
 OnCalendar=Sun *-*-* 04:00:00
