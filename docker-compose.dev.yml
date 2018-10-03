@@ -34,6 +34,9 @@ services:
   #  ports: ['127.0.0.1:5431:5432']
   #  restart: always
 
+  export:
+  #  depends_on: [raw-db, agg-db]
+  
   ws:
   #  depends_on: [agg-db]
 

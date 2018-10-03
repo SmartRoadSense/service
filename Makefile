@@ -106,7 +106,7 @@ export_osm:
 	${DC_RUN} raw-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 	${DC_RUN} osm-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 
-.PHONY: export export_raw export_agg export_single_data_as_JSON
+.PHONY: export export_raw export_agg export_single_data_as_JSON data_extraction
 export: export_raw export_agg
 
 export_raw:
@@ -118,6 +118,9 @@ export_agg:
 export_single_data_as_JSON:
 	${DC_RUN} raw-cli psql  -c 'select st_asgeojson(st_collect(position)) from single_data;' -o /code/single_data.json
 
+data_extraction:
+	${DC_RUN} export bash
+	
 .PHONY: rs
 rs:
 	${DC} restart
@@ -148,10 +151,6 @@ logs_%:
 .PHONY: raw-cli
 raw-cli:
 	${DC_RUN} raw-cli pgcli
-
-.PHONY:	raw-projections-reset
-raw-projections-reset:
-	${DC_RUN} map-reduce php /code/reset_projections.php
 
 .PHONY: agg-cli
 agg-cli:
