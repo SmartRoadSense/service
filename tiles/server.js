@@ -41,8 +41,10 @@ if (cluster.isMaster) {
   const TILE_LENGTH = 256;
   const CIRCLE_RADIUS = 4;
 
-  app.get('/api/v1/tiles/:zoom/:x/:y', function(req, res) {
+  app.get('/api/v1/tiles/:zoom/:x/:y/:mark?/:all?', function(req, res) {
 
+    let mark = req.params.mark
+	let include_old_data = req.params.all
     let coords = {x: req.params.x, y: req.params.y};
     let zoom = req.params.zoom;
 
@@ -63,10 +65,20 @@ if (cluster.isMaster) {
       bbox[3] + bboxOffset
     ];
 
+	var path_str = `/ws/?bbox=${bboxExt}&zoom_level=${zoom}`
+	
+	if (mark) {
+        path_str += `&mark=${mark}` 
+    }
+	
+	if (include_old_data) {
+        path_str += `&all=1` 
+    }
+	
     let params = {
       host: SRS_HOST,
       port: SRS_PORT,
-      path: `/ws/?bbox=${bboxExt}&zoom_level=${zoom}`
+      path: path_str
     };
 
     console.log(params);
@@ -80,7 +92,6 @@ if (cluster.isMaster) {
       });
 
       resp.on('end', function() {
-
         console.log('End GET');
         let values = JSON.parse(data);
         console.log(`elements: ${values.features.length}`);
