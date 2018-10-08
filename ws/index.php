@@ -2,7 +2,11 @@
 
 require_once 'config.php';
 
-$srsDB = new SrsDB(DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS);
+$clientMark = $_GET['mark'];
+$include_old_data = (isset($_GET['all']) && !empty($_GET['all']));
+
+$srsDB = new SrsDB(DB_HOST, DB_PORT, $clientMark == "" ? DB_AGG_NAME : DB_RAW_NAME, DB_USER, DB_PASS);
+
 
 // Handle request parameters
 $moduleFilter = 1;
@@ -29,12 +33,18 @@ else {
     // split the bbox into it's parts
     list($left, $bottom, $right, $top) = explode(",", $_GET['bbox']);
 
-
+	
+	
     $srsDB->open();
-    $data = $srsDB->SRS_Get_All_Current_Data($left, $bottom, $right, $top, $moduleFilter);
+	if ($clientMark == ""){
+		$data = $srsDB->SRS_Get_All_Current_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark);
+		//LogUtil::get()->info("Points retrieved: " . print_r($data, true));
+	}else {
+		$data = $srsDB->SRS_Marked_Raw_Data($left, $bottom, $right, $top, $clientMark, $include_old_data);
+	}
     $srsDB->close();
 
-    LogUtil::get()->info("Points retrieved: " . print_r($data, true));
+    
 
     // Enclose data in GeoJson like structure.
     $ajxres = array();
