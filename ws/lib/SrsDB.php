@@ -54,21 +54,26 @@ class SrsDB {
         return ($data);
     }
 
-	public function SRS_Marked_Raw_Data($left, $bottom, $right, $top, $mark, $all_data) {
+	public function SRS_Marked_Raw_Data($left, $bottom, $right, $top, $moduleFilter = 1, $mark, $all_data) {
         $updatedIndexes = array();
+
+        $filterCondition = "";
+        if (is_numeric($moduleFilter) && $moduleFilter != 1) {
+            $filterCondition = "(single_data_id % $moduleFilter = 0) AND ";
+        }
 		
 		$mark = mb_strtolower($mark);
 		
 		$query = "SELECT ppe, st_asgeoJson(position)
             FROM single_data LEFT JOIN track ON track.track_id = single_data.track_id 
-			  WHERE
+			  WHERE $filterCondition 
 			  LOWER(track.metadata::json->>'clientMark') = '$mark' AND 
 			  single_data.position && ST_MakeEnvelope( $left, $bottom, $right, $top , 4326) ";
 		
 		if($all_data) {
 			$query .= " UNION SELECT ppe, st_asgeoJson(position)
             FROM single_data_old LEFT JOIN track ON track.track_id = single_data_old.track_id 
-			  WHERE
+			  WHERE $filterCondition 
 			  LOWER(track.metadata::json->>'clientMark') = '$mark' AND 
 			  single_data_old.position && ST_MakeEnvelope( $left, $bottom, $right, $top , 4326) ";
 		}

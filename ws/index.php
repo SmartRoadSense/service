@@ -40,7 +40,7 @@ else {
 		$data = $srsDB->SRS_Get_All_Current_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark);
 		//LogUtil::get()->info("Points retrieved: " . print_r($data, true));
 	}else {
-		$data = $srsDB->SRS_Marked_Raw_Data($left, $bottom, $right, $top, $clientMark, $include_old_data);
+		$data = $srsDB->SRS_Marked_Raw_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark, $include_old_data);
 	}
     $srsDB->close();
 
