@@ -20,7 +20,7 @@ services:
     container_name: ui
     build: ./ui
     volumes:
-    - web_data:/output:rw
+    - web_data:/target:rw
 
   tiles:
     container_name: tiles
@@ -55,13 +55,13 @@ services:
     build: ./raw/web
     env_file: config.env
     restart: always
-    
+
   export:
     container_name: export
     build: ./export
     env_file: config.env
     volumes: ['./data:/data:rw']
-  
+
   bb:
     container_name: bb
     build: ./bb
