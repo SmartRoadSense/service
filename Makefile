@@ -74,14 +74,14 @@ fetch_eu_%: data clean_pbf
 	wget http://download.geofabrik.de/europe/$*-latest.osm.pbf.md5
 	md5sum -c $*-latest.osm.pbf.md5
 	rm $*-latest.osm.pbf.md5
-	mv $*-latest.osm.pbf data/map.osm
+	mv $*-latest.osm.pbf data/map.osm.pbf
 
 fetch_region_%: data clean_pbf
 	wget http://download.geofabrik.de/$*-latest.osm.pbf
 	wget http://download.geofabrik.de/$*-latest.osm.pbf.md5
 	md5sum -c $*-latest.osm.pbf.md5
 	rm $*-latest.osm.pbf.md5
-	mv $*-latest.osm.pbf data/map.osm
+	mv $*-latest.osm.pbf data/map.osm.pbf
 
 fetch_italy: fetch_eu_italy
 
@@ -97,14 +97,20 @@ import_raw:
 import_agg:
 	${DC_RUN} agg-cli psql -f /code/data.sql
 
-import_osm:
+import_osm: fetch_eu_italy
 	${DC_RUN} raw-cli ./import_osm.sh
-	${DC_RUN} osm-cli ./import_osm.sh
 
+import_osm_%: fetch_eu_%
+	${DC_RUN} raw-cli ./import_osm.sh
+
+append_osm_%: fetch_eu_%
+	${DC_RUN} raw-cli ./append_osm.sh
+	@echo '* correctly imported'
+	
+	
 .PHONY: export_osm
 export_osm:
 	${DC_RUN} raw-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
-	${DC_RUN} osm-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
 
 .PHONY: export export_raw export_agg export_single_data_as_JSON data_extraction
 export: export_raw export_agg
