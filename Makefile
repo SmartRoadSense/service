@@ -162,10 +162,6 @@ raw-cli:
 agg-cli:
 	${DC_RUN} agg-cli pgcli
 
-.PHONY: osm-cli
-osm-cli:
-	${DC_RUN} osm-cli pgcli
-
 .PHONY: update_meta
 update_meta: jobs/meta-updater/meta-updater
 	${DC_RUN} meta-updater /code/meta-updater
@@ -222,5 +218,5 @@ clean_data:
 
 clean_pbf:
 	rm -rf *.pbf*
-	rm -rf data/map.osm
+	rm -rf data/map.osm.pbf
 
