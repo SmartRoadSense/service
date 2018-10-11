@@ -1,3 +1,0 @@
-# Required for `libgeotiff-epsg` package
-deb http://archive.ubuntu.com/ubuntu/ trusty multiverse
-deb http://archive.ubuntu.com/ubuntu/ trusty-updates multiverse
