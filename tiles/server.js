@@ -44,7 +44,7 @@ if (cluster.isMaster) {
   app.get('/api/v1/tiles/:zoom/:x/:y/:mark?/:all?', function(req, res) {
 
     let mark = req.params.mark
-	let include_old_data = req.params.all
+    let include_old_data = req.params.all
     let coords = {x: req.params.x, y: req.params.y};
     let zoom = req.params.zoom;
 
@@ -66,15 +66,15 @@ if (cluster.isMaster) {
     ];
 
 	var path_str = `/ws/?bbox=${bboxExt}&zoom_level=${zoom}`
-	
+
 	if (mark) {
-        path_str += `&mark=${mark}` 
+        path_str += `&mark=${mark}`
     }
-	
+
 	if (include_old_data) {
-        path_str += `&all=1` 
+        path_str += `&all=1`
     }
-	
+
     let params = {
       host: SRS_HOST,
       port: SRS_PORT,
@@ -96,7 +96,7 @@ if (cluster.isMaster) {
         let values = JSON.parse(data);
         console.log(`elements: ${values.features.length}`);
 
-        let canvas = new Canvas(TILE_LENGTH, TILE_LENGTH);
+        let canvas = Canvas.createCanvas(TILE_LENGTH, TILE_LENGTH);
         let context = canvas.getContext('2d');
 
         // absolute pixel position of the border box NE and SW vertexes
