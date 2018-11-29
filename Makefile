@@ -106,8 +106,8 @@ import_osm_%: fetch_eu_%
 append_osm_%: fetch_eu_%
 	${DC_RUN} raw-cli ./append_osm.sh
 	@echo '* correctly imported'
-	
-	
+
+
 .PHONY: export_osm
 export_osm:
 	${DC_RUN} raw-cli pg_dump -a -t 'planet_osm*' -f /code/osm.sql
@@ -126,7 +126,7 @@ export_single_data_as_JSON:
 
 data_extraction:
 	${DC_RUN} export bash
-	
+
 .PHONY: rs
 rs:
 	${DC} restart
@@ -137,7 +137,7 @@ stop: clean_ui
 
 .PHONY: rm rmc
 rm rmc: stop
-	${DC} rm -fa
+	${DC} rm -f
 
 .PHONY: rmi
 rmi: rmc
