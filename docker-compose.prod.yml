@@ -2,7 +2,8 @@
 version: '3'
 services:
   web:
-    ports: ['0.0.0.0:80:8080']
+    ports:
+    - "0.0.0.0:80:8080"
     volumes:
     - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
     - /tmp/tiles:/tmp/tiles:rw
@@ -18,7 +19,8 @@ services:
     restart: always
 
   agg-web:
-    ports: ['127.0.0.1:9001:80']
+    ports:
+    - "127.0.0.1:9001:80"
     restart: always
 
   bb:
@@ -31,5 +33,6 @@ services:
     restart: always
 
   raw-web:
-    ports: ['127.0.0.1:9002:80']
+    ports:
+    - "127.0.0.1:9002:80"
     restart: always
