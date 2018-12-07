@@ -1,60 +1,63 @@
 # Common config
-version: '2'
+version: '3'
 volumes:
-  web_data: {}
+  srs_web_data:
+    external: true
+  srs_open_data:
+    external: true
+
 services:
   web:
     container_name: web
     build: ./web
     volumes:
-    - web_data:/www:ro
-    - ./data:/data:ro
+    - srs_web_data:/www:ro
+    - srs_open_data:/opendata:ro
     depends_on:
     - tiles
     - ui
     - ws
     - api
-    restart: always
 
   ui:
     container_name: ui
     build: ./ui
     volumes:
-    - web_data:/target:rw
+    - srs_web_data:/target:rw
 
   tiles:
     container_name: tiles
     build: ./tiles
     env_file: config.env
     command: nodemon server.js
-    volumes: ['./tiles:/code:ro']
-    ports: ['127.0.0.1:8000:8000']
-    depends_on: [ws]
-    restart: always
+    volumes:
+    - ./tiles:/code:ro
+    ports:
+    - "127.0.0.1:8000:8000"
+    depends_on:
+    - ws
 
   agg-cli:
     container_name: agg-cli
     build: ./agg/cli
     env_file: config.env
     volumes:
-    - ./agg/cli:/code:rw
-    - ./data:/data:rw
+    - srs_open_data:/opendata:rw
   agg-web:
     container_name: agg-web
     build: ./agg/web
     env_file: config.env
-    restart: always
 
   raw-cli:
     container_name: raw-cli
     build: ./raw/cli
     env_file: config.env
-    volumes: ['./raw/cli:/code:rw', './data:/data:rw']
+    volumes:
+    - ./raw/cli:/code:rw
   raw-web:
     container_name: raw-web
     build: ./raw/web
     env_file: config.env
-    restart: always
 
   export:
     container_name: export
@@ -66,31 +69,33 @@ services:
     container_name: bb
     build: ./bb
     env_file: config.env
-    ports: ['127.0.0.1:8080:8080']
-    restart: always
+    ports:
+    - "127.0.0.1:8080:8080"
 
   ws:
     container_name: ws
     build: ./ws
     env_file: config.env
-    volumes: ['./ws:/code/ws:rw']
-    restart: always
+    volumes:
+    - ./ws:/code/ws:rw
 
   api:
     container_name: api
     build: ./api
     env_file: config.env
-    volumes: ['./api:/code/api:rw']
-    restart: always
+    volumes:
+    - ./api:/code/api:rw
 
   map-reduce:
     container_name: map-reduce
     build: ./jobs/map-reduce
     env_file: config.env
-    volumes: ['./jobs/map-reduce:/code:ro']
+    volumes:
+    - ./jobs/map-reduce:/code:ro
 
   meta-updater:
     container_name: meta-updater
     build: ./jobs/meta-updater/
     env_file: config.env
-    volumes: ['./jobs/meta-updater:/code:ro']
+    volumes:
+    - ./jobs/meta-updater:/code:ro

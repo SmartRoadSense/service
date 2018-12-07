@@ -1,8 +1,9 @@
 # Development-specific config
-version: '2'
+version: '3'
 services:
   web:
-    ports: ['0.0.0.0:80:8080']
+    ports:
+    - "0.0.0.0:80:8080"
     volumes:
     - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
 
@@ -13,26 +14,26 @@ services:
   agg-cli:
   #  depends_on: [agg-db]
   agg-web:
-    ports: ['0.0.0.0:9001:80']
+    ports:
+    - "0.0.0.0:9001:80"
   #  depends_on: [agg-db]
   #agg-db:
   #  container_name: agg-db
   #  build: ./agg/db
   #  volumes: ['agg_data:/var/lib/postgresql/data/srs:rw']
   #  ports: ['127.0.0.1:5433:5432']
-  #  restart: always
 
   raw-cli:
   #  depends_on: [raw-db]
   raw-web:
-    ports: ['0.0.0.0:9002:80']
+    ports:
+    - "0.0.0.0:9002:80"
   #  depends_on: [raw-db]
   #raw-db:
   #  container_name: raw-db
   #  build: ./raw/db
   #  volumes: ['raw_data:/var/lib/postgresql/data/srs:rw']
   #  ports: ['127.0.0.1:5431:5432']
-  #  restart: always
 
   export:
   #  depends_on: [raw-db, agg-db]

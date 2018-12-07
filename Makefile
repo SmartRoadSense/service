@@ -1,7 +1,12 @@
+SHELL := /bin/bash
+
 ENV ?= prod
 DC := docker-compose -f docker-compose.yml -f docker-compose.${ENV}.yml
 DC_RUN := ${DC} run --rm
 
+.PHONY: confirmation
+confirmation:
+	@echo -n 'Are you sure? [y|N] ' && read ans && [ $$ans == y ]
 
 .PHONY: test
 test:
@@ -17,6 +22,17 @@ data:
 
 test/payload.json:
 	gzip -kd test/payload.json.gz
+
+.PHONY: create_volumes drop_volumes
+create_volumes:
+	docker volume create srs_web_data
+	docker volume create srs_open_data
+	@echo 'SmartRoadSense external volumes created'
+
+drop_volumes: confirmation
+	docker volume rm srs_web_data
+	docker volume rm srs_open_data
+	@echo 'SmartRoadSense external volumes dropped'
 
 .PHONY: up
 up: data build

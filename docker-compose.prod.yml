@@ -1,19 +1,38 @@
 # Production-specific config
-version: '2'
+version: '3'
 services:
   web:
-    ports: ['0.0.0.0:80:8080']
+    ports:
+    - "0.0.0.0:80:8080"
     volumes:
     - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
     - /tmp/tiles:/tmp/tiles:rw
     - /tmp/osm_tiles:/tmp/osm_tiles:rw
+    restart: always
 
   ui:
     environment:
     - HUGO_BASEURL=http://www.smartroadsense.it/
+    restart: always
+
+  tiles:
+    restart: always
 
   agg-web:
-    ports: ['127.0.0.1:9001:80']
+    ports:
+    - "127.0.0.1:9001:80"
+    restart: always
+
+  bb:
+    restart: always
+
+  ws:
+    restart: always
+
+  api:
+    restart: always
 
   raw-web:
-    ports: ['127.0.0.1:9002:80']
+    ports:
+    - "127.0.0.1:9002:80"
+    restart: always
