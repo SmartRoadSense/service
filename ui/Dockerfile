@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.49-ext-alpine
+FROM klakegg/hugo:0.52-ext-alpine
 
 RUN apk update \
     && apk --no-cache add openssl git git-lfs
@@ -9,5 +9,6 @@ RUN chmod 0777 /build-static-site.sh
 
 VOLUME /src
 VOLUME /target
+VOLUME /repo
 
 ENTRYPOINT [ "/bin/sh", "-c", "/build-static-site.sh"]
