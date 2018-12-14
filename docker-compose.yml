@@ -5,6 +5,8 @@ volumes:
     external: true
   srs_open_data:
     external: true
+  srs_ui_repo_data:
+    external: true
 
 services:
   web:
@@ -24,6 +26,7 @@ services:
     build: ./ui
     volumes:
     - srs_web_data:/target:rw
+    - srs_ui_repo_data:/repo:rw
 
   tiles:
     container_name: tiles

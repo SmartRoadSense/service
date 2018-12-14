@@ -27,11 +27,13 @@ test/payload.json:
 create_volumes:
 	docker volume create srs_web_data
 	docker volume create srs_open_data
+	docker volume create srs_ui_repo_data
 	@echo 'SmartRoadSense external volumes created'
 
 drop_volumes: confirmation
 	docker volume rm srs_web_data
 	docker volume rm srs_open_data
+	docker volume rm srs_ui_repo_data
 	@echo 'SmartRoadSense external volumes dropped'
 
 .PHONY: up

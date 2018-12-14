@@ -9,5 +9,6 @@ RUN chmod 0777 /build-static-site.sh
 
 VOLUME /src
 VOLUME /target
+VOLUME /repo
 
 ENTRYPOINT [ "/bin/sh", "-c", "/build-static-site.sh"]
