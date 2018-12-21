@@ -51,6 +51,7 @@ func main() {
 	dbSet["raw"]["name"] = Getenv("RAW_DB_NAME", "srs_raw_db")
 	dbSet["raw"]["user"] = Getenv("RAW_DB_USER", "crowd4roads_sw")
 	dbSet["raw"]["pass"] = Getenv("RAW_DB_PASS", "password")
+	dbSet["raw"]["port"] = Getenv("RAW_DB_PORT", "5432")
 	dbSet["raw"]["query"] = "select (select count(*) from single_data) + " +
 		"(select count(*) from single_data_old)"
 
@@ -59,6 +60,7 @@ func main() {
 	dbSet["agg"]["name"] = Getenv("AGG_DB_NAME", "srs_agg_db")
 	dbSet["agg"]["user"] = Getenv("AGG_DB_USER", "crowd4roads_sw")
 	dbSet["agg"]["pass"] = Getenv("AGG_DB_PASS", "password")
+	dbSet["agg"]["port"] = Getenv("AGG_DB_PORT", "5432")
 	dbSet["agg"]["query"] = "SELECT COUNT(*) FROM current;"
 
 	// meta database
@@ -66,6 +68,7 @@ func main() {
 	dbSet["meta"]["name"] = Getenv("META_DB_NAME", "srs_agg_db")
 	dbSet["meta"]["user"] = Getenv("META_DB_USER", "crowd4roads_sw")
 	dbSet["meta"]["pass"] = Getenv("META_DB_PASS", "password")
+	dbSet["meta"]["port"] = Getenv("META_DB_PORT", "5432")
 	dbSet["meta"]["query"] = "INSERT INTO count (raw, aggregate) VALUES (%d, %d);"
 
 	// counters
@@ -83,7 +86,7 @@ func main() {
 		db := dbSet[dbName]
 		// render the connection string
 		connString := fmt.Sprintf(template,
-			db["host"], db["name"], db["user"], db["pass"])
+			db["host"], db["name"], db["user"], db["pass"], db["port"])
 
 		// print params and open the connection
 		log.Println(connString)

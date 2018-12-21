@@ -11,6 +11,7 @@ DEFINE("DB_HOST", _getenv("RAW_DB_HOST", "raw-db"));
 DEFINE("DB_NAME", _getenv("RAW_DB_NAME", "srs_raw_db"));
 DEFINE("DB_USER", _getenv("RAW_DB_USER", "crowd4roads_sw"));
 DEFINE("DB_PASS", _getenv("RAW_DB_PASS", "password"));
+DEFINE("DB_PORT", _getenv("RAW_DB_PORT", "5432"));
 
 date_default_timezone_set("Europe/Rome");
 
@@ -40,7 +41,7 @@ $serviceContainer->setAdapterClass('srs_raw', 'pgsql');
 $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
-  'dsn' => 'pgsql:host='.DB_HOST.';dbname='.DB_NAME,
+  'dsn' => 'pgsql:host='.DB_HOST.';dbname='.DB_NAME.';port='.DB_PORT,
   'user' => DB_USER,
   'password' => DB_PASS,
   'settings' =>

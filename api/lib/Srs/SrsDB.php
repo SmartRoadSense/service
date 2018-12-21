@@ -11,16 +11,18 @@ class SrsDB {
     private $dbName;
     private $dbUser;
     private $dbPass;
+    private $dbPort;
 
-    public function SrsDB($dbHost, $dbName, $dbUser, $dbPass) {
+    public function SrsDB($dbHost, $dbName, $dbUser, $dbPass, $dbPort) {
         $this->dbHost = $dbHost;
         $this->dbName = $dbName;
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
+        $this->dbPort = $dbPort;
     }
 
     public function open() {
-        $this->conn = pg_connect("host= " . $this->dbHost . " dbname=" . $this->dbName . " user=" . $this->dbUser . " password=" . $this->dbPass);
+        $this->conn = pg_connect("host= " . $this->dbHost . " dbname=" . $this->dbName . " user=" . $this->dbUser . " password=" . $this->dbPass . " port=" . $this->dbPort);
 
         if (!$this->conn)
             throw new Exception("DB Connection Exception " . pg_last_error($this->conn));
