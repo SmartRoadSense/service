@@ -10,6 +10,7 @@ class SrsAggregateDB {
 	private $dbName;
 	private $dbUser;
 	private $dbPass;
+	private $dbPort;
 
 	public function SrsAggregateDB($dbHost, $dbPort, $dbName, $dbUser, $dbPass) {
 		$this -> dbHost = $dbHost;
@@ -17,6 +18,7 @@ class SrsAggregateDB {
 		$this -> dbName = $dbName;
 		$this -> dbUser = $dbUser;
 		$this -> dbPass = $dbPass;
+
 	}
 
 	public function open() {

@@ -11,7 +11,7 @@ const config = {
     user: process.env.AGG_DB_USER,
     database: 'srs_agg_db',
     password: process.env.AGG_DB_PASS,
-    port: 5432
+    port: process.env.AGG_DB_PORT
 };
 
 // pool takes the object above as parameter

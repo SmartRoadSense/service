@@ -6,6 +6,7 @@ class SrsDB {
     private $dbName;
     private $dbUser;
     private $dbPass;
+    private $dbPort;
 
     public function SrsDB($dbHost, $dbPort, $dbName, $dbUser, $dbPass) {
         $this->dbHost = $dbHost;
