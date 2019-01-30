@@ -33,38 +33,48 @@ else {
     // split the bbox into it's parts
     list($left, $bottom, $right, $top) = explode(",", $_GET['bbox']);
 
+	try{
 	
-	
-    $srsDB->open();
-	if ($clientMark == ""){
-		$data = $srsDB->SRS_Get_All_Current_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark);
-		//LogUtil::get()->info("Points retrieved: " . print_r($data, true));
-	}else {
-		$data = $srsDB->SRS_Marked_Raw_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark, $include_old_data);
+		$srsDB->open();
+		if ($clientMark == ""){
+			$data = $srsDB->SRS_Get_All_Current_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark);
+			//LogUtil::get()->info("Points retrieved: " . print_r($data, true));
+		}else {
+			$data = $srsDB->SRS_Marked_Raw_Data($left, $bottom, $right, $top, $moduleFilter, $clientMark, $include_old_data);
+		}
+		$srsDB->close();
+
+
+		// Enclose data in GeoJson like structure.
+		$ajxres = array();
+		$features = array();
+		$ajxres['type'] = 'FeatureCollection';
+
+		// go through the list adding each one to the array to be returned
+		if ($data && count($data) > 0)
+			foreach ($data as $row) {
+				$f = array();
+				$f['geometry'] = json_decode($row['st_asgeojson']);
+				$f['ppe'] = $row['ppe'];
+
+				$features[] = $f;
+			}
+
+		// add the features array to the end of the ajxres array
+		$ajxres['features'] = $features;
+
+		echo json_encode($ajxres);
+		
+	} catch(Exception $e) {
+		
+		// Database error
+		$ajxres = array();
+		$ajxres['resp'] = 10;
+		$ajxres['dberror'] = 1;
+		$ajxres['msg'] = $e->getMessage();
+		echo json_encode($ajxres);
+		
 	}
-    $srsDB->close();
-
-    
-
-    // Enclose data in GeoJson like structure.
-    $ajxres = array();
-    $features = array();
-    $ajxres['type'] = 'FeatureCollection';
-
-    // go through the list adding each one to the array to be returned
-    if ($data && count($data) > 0)
-        foreach ($data as $row) {
-            $f = array();
-            $f['geometry'] = json_decode($row['st_asgeojson']);
-            $f['ppe'] = $row['ppe'];
-
-            $features[] = $f;
-        }
-
-    // add the features array to the end of the ajxres array
-    $ajxres['features'] = $features;
-
-    echo json_encode($ajxres);
 }
 
 ?>
