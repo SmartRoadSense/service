@@ -24,7 +24,7 @@ class SrsDB {
                                  " password=" . $this->dbPass);
 
         if (!$this->conn)
-          throw Exception("DB Connection Exception " . pg_last_error($this->conn));
+          throw new Exception("DB Connection Exception " . pg_last_error($this->conn));
     }
 
     public function close() {

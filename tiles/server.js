@@ -81,7 +81,8 @@ if (cluster.isMaster) {
       path: path_str
     };
 
-    console.log(params);
+    console.log(path_str);
+	console.log(params);
 
     let data = '';
 
@@ -93,8 +94,17 @@ if (cluster.isMaster) {
 
       resp.on('end', function() {
         console.log('End GET');
-        let values = JSON.parse(data);
-        console.log(`elements: ${values.features.length}`);
+        
+		let values;
+		try{
+			values = JSON.parse(data);
+			console.log(`elements: ${values.features.length}`);
+		} catch(e) {
+			console.error('Output error from WS service: '+ params.path);
+			console.error(e);
+			return;
+		}       
+ 		
 
         let canvas = Canvas.createCanvas(TILE_LENGTH, TILE_LENGTH);
         let context = canvas.getContext('2d');
