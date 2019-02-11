@@ -152,77 +152,8 @@ try {
             exit(1);
         }
 
-		/*
-        $lines = splitEntries($updatedKeys, WORKERS);
 
-        for($i = 1; $i < WORKERS; $i++){
-            startSubAggregationRoutine($lines[$i], $i, $outputFilePrefix);
-        }
-        printInfoln("##PROFILE## Start executing update...");
-
-		
-		// for each GeomId returned, calculate the updated roughness value
-		foreach ($lines[0] as $geomId) { //Track by track
-			if ($geomId != null && $geomId != "") {
-
-				printDebugln("Get OsmRoad highways type with OsmId" . $geomId);
-				$roadType = $srsDB -> SRS_Get_OsmRoad_Data($geomId);
-				printDebugln("RoadType:" . $roadType);
-
-				printInfoln("Calculate roughness on point along OsmLine with OsmId " . $geomId. " (road type:$roadType)");
-				$updatedRoughness = $srsDB -> SRS_Road_Roughness_Values($geomId, $roadRoughnessMeters, $roadRoughnessRange);
-
-				printInfoln("Uploading into local db...");
-				try {
-
-					$aggregateList = fromSrsList2AggregateDBList($updatedRoughness, $geomId, $roadType);
-
-					if (count($aggregateList) > 0) {
-						$srsAggregateDB->SRS_UploadAggregateData($aggregateList);
-						printDebugln("Roughness calculated along OsmLine (with OsmId " . $geomId . ") UPLOADED to local aggregations db. Removing from tmp table...");
-					}else{
-                        printDebugln("Aggregate list is null!");
-                    }
-
-				}
-				catch(Exception $ex) {
-					printErrln("Error uploading data into local aggregations db.");
-					printErrln($ex);
-				}
-
-
-                printInfoln("");
-			}
-		}
-		*/
         $profiler->PrintTime(TimeCounter::$STEP_LOCAL_AGGREGATION);
-
-        /*
-        //CartoDB
-        printInfoln("Uploading to CartoDB...");
-        try {
-
-            $updatedInfo = $srsAggregateDB->SRS_LastUpdatedValues();
-            printDebugln("Updated Info length is ".count($updatedInfo));
-
-            if(count($updatedInfo) > 0){
-                printDebugln("Check I ok");
-                $cartoDBList = fromSrsList2CartoDBUploadDataList($updatedInfo);
-                printDebugln("CartoDBList Info length is ".count($cartoDBList));
-
-                if (count($cartoDBList) > 0) {
-                    printDebugln("Check II ok");
-                    $cartoDBUploader->uploadData($cartoDBList);
-                    printDebugln("Roughness calculated along OsmLine (with OsmId " . $geomId . ") UPLOADED to CartoDB. Removing from tmp table...");
-                }
-            }
-        }
-
-        catch(Exception $ex) {
-            printErrln("Error uploading data to CartoDB.");
-            printErrln($ex);
-        }
-        */
         $profiler->PrintTime(TimeCounter::$STEP_REMOTE_UPLOAD);
 	}
 
