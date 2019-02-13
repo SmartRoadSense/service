@@ -1,0 +1,6 @@
+# Disable EOL processing
+* -text
+
+*.jpg -diff
+*.psd -diff
+*.png -diff
