@@ -46,6 +46,7 @@ services:
     env_file: config.env
     volumes:
     - srs_open_data:/opendata:rw
+    - ./data:/data:rw
   agg-web:
     container_name: agg-web
     build: ./agg/web
