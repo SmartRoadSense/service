@@ -8,7 +8,7 @@ RUN composer install --no-interaction
 ENV AGG_DB_HOST=agg-db \
     AGG_DB_NAME=srs_agg_db \
     AGG_DB_USER=crowd4roads_sw \
-    AGG_DB_PASS=password \
+    AGG_DB_PASS=password
 
 # meta database
 ENV META_DB_HOST=agg-db \
