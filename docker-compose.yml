@@ -103,3 +103,12 @@ services:
     env_file: config.env
     volumes:
     - ./jobs/meta-updater:/code:ro
+
+  webhookmonitor:
+    container_name: webhookmonitor
+    image: lorenzck/webhook-dispatcher:1.1
+    env_file: config.env
+    volumes:
+    - ./webhooks/:/app/hooks/:ro
+    - /var/run/docker.sock:/var/run/docker.sock:rw
+    - ./:/code/:ro

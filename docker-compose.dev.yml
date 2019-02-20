@@ -49,3 +49,7 @@ services:
 
   meta-updater:
   #  depends_on: [agg-db]
+
+  webhookmonitor:
+    environment:
+    - ENV=dev

@@ -36,3 +36,8 @@ services:
     ports:
     - "127.0.0.1:9002:80"
     restart: always
+
+  webhookmonitor:
+    environment:
+    - ENV=prod
+    restart: unless-stopped

@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 ENV ?= prod
-DC := docker-compose -f docker-compose.yml -f docker-compose.${ENV}.yml
+DC := docker-compose -f docker-compose.yml -f docker-compose.${ENV}.yml --project-name smartroadsense
 DC_RUN := ${DC} run --rm
 
 .PHONY: confirmation
