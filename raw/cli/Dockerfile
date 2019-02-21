@@ -1,4 +1,4 @@
-FROM smartroadsense/postgres-cli
+FROM smartroadsense/postgres-cli:2.0
 
 ENV PGHOST=raw-db \
     PGUSER=crowd4roads_sw \
