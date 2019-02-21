@@ -159,12 +159,12 @@ rm rmc: stop
 
 .PHONY: rmi
 rmi: rmc
-	docker rmi $$(docker images | grep 'srs' | awk '{print $$1}')
+	docker rmi $$(docker images | grep 'smartroadsense_' | awk '{print $$1}')
 
 .PHONY: rmv
 rmv: stop
 	${DC} rm -fv
-	docker volume rm $$(docker volume ls | grep srs | awk '{print $$2}')
+	docker volume rm $$(docker volume ls | grep 'smartroadsense_' | awk '{print $$2}')
 
 sh_%:
 	${DC_RUN} $* /bin/bash
