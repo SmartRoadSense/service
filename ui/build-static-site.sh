@@ -3,6 +3,11 @@
 if [ -d "/repo/website" ]; then
     echo "Pulling website updates…"
     cd /repo/website
+    git fetch
+    if [[ $(git rev-parse HEAD) == $(git rev-parse @{u}) ]]; then
+        echo "No updates."
+        exit
+    fi
     git pull --ff-only
 else
     echo "Retrieving website source…"
