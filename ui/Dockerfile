@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.53-ext-alpine
+FROM klakegg/hugo:0.54.0-ext-alpine
 
 RUN apk update \
     && apk --no-cache add openssl git git-lfs
