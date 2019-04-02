@@ -4,3 +4,4 @@ config.env
 *.pbf*
 .idea/*
 .vscode/*
+.vs/*
