@@ -1,4 +1,4 @@
-FROM smartroadsense/postgres-cli:2.0
+FROM smartroadsense/postgres-cli:3.0
 
 ENV PGHOST=agg-db \
     PGUSER=crowd4roads_sw \
