@@ -77,7 +77,7 @@ func main() {
 	counts["agg"] = 0
 
 	// template string for db connection strings
-	template := "host=%s dbname=%s user=%s password=%s sslmode=disable"
+	template := "host=%s dbname=%s user=%s password=%s port=%s sslmode=disable"
 
 	// loop trough databases
 	// NOTE: keys are harcoded to preserve the right order
