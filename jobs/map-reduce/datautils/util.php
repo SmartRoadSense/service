@@ -51,6 +51,8 @@ function fromSrsList2AggregateDBList($roughnessList, $geomId, $roadType){
 	foreach($filteredList as $r){
 		$aggData = new stdClass();
 		$aggData->ppe = $r->avgRoughness;
+		$aggData->ppe_stddev = $r->ppeStddev;
+		$aggData->occupancy = $r->occupancy;
 		$aggData->osmid = $geomId;
 		$aggData->highway = $roadType;
 
@@ -61,7 +63,10 @@ function fromSrsList2AggregateDBList($roughnessList, $geomId, $roadType){
 		// and longitude
 		$aggData->longitude = $point->coordinates[0];
 
-		// finally append CartoDBData to the list
+		$aggData->updated_at = $r->last_update;
+		$aggData->count = $r->count;
+
+		// finally append to list
 		array_push($aggDBList, $aggData);
 	}
 	return $aggDBList;

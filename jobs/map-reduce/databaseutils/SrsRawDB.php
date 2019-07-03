@@ -86,6 +86,19 @@ class SrsRawDB {
 
     }
 
+    public function SRS_Single_Data_Count(){
+
+      	$result = pg_query($this -> conn, "SELECT count(*) as count from single_data;");
+
+		if (!$result)
+			throw new Exception("Error fetching SRS single_data count: " . pg_last_error($this -> conn));
+
+		$row = pg_fetch_array($result);
+
+        return $row['count'];
+
+    }
+
     public function SRS_Intersection_Close_Enough($aRoad, $bRoad, $points, $range){
 
         $arraySql = "";
@@ -118,13 +131,17 @@ class SrsRawDB {
 		//pg_query($this -> conn, 'DELETE FROM "' . SrsRawDB::TMP_CARTODB_TABLE . '" WHERE "osmLineId" = ' . $row[0]);
 	}
 
-	public function SRS_Road_Roughness_Values($geomId, $meters = 20, $range = 40, $min_position_resolution = 20, $days = 7) {
+	public function SRS_Road_Roughness_Values($geomId, $meters = 20, $range = 40, $min_position_resolution = 20, $days = 10000) {
 		$updatedRoughness = array();
         $query = "SELECT ST_AsGeoJson(avg_point) AS p,
-						avg_roughness AS r
+						avg_roughness AS r,
+						max_date,
+						count,
+						stddev_ppe, 
+						occupancy as occupancy
 				  	FROM
 						srs_road_roughness_values($geomId, $meters, $range, $min_position_resolution, $days)
-						AS result(avg_roughness float, avg_point geometry)";
+						AS result(avg_roughness float, avg_point geometry, max_date timestamp, count bigint, stddev_ppe float, occupancy float)";
 
 		$result = pg_query($this -> conn, $query);
 
@@ -136,6 +153,10 @@ class SrsRawDB {
 			$r = new stdClass;
 			$r -> point = $row['p'];
 			$r -> avgRoughness = $row['r'];
+			$r -> last_update = $row['max_date'];
+			$r -> count = $row['count'];
+			$r -> ppeStddev = $row['stddev_ppe'];
+			$r -> occupancy = $row['occupancy'];
 			array_push($updatedRoughness, $r);
 
 			// fetch next row
