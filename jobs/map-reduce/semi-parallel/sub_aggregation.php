@@ -11,7 +11,7 @@ require_once __DIR__.'/../logutils/ProfilingUtils.php';
 define("PRINT_PID", true);
 
 ob_implicit_flush(true);
-ob_end_flush();
+if (ob_get_length()) ob_end_clean();
 
 // ******* arguments part ******* //
 $projectionSize = SRS_UPDATE_DATA_PROJECTIONS_SIZE;
@@ -61,6 +61,9 @@ try {
             $roadType = $srsDB -> SRS_Get_OsmRoad_Data($geomId);
             printDebugln("RoadType:" . $roadType, PRINT_PID);
 
+            $sd_count = $srsDB -> SRS_Single_Data_Count();
+            printDebugln("single_data count:" . $sd_count, PRINT_PID);
+
             printInfoln("Calculate roughness on point along OsmLine with OsmId " . $geomId. " (road type:$roadType)", PRINT_PID);
             $updatedRoughness = $srsDB -> SRS_Road_Roughness_Values($geomId, $roadRoughnessMeters, $roadRoughnessRange);
             print_r($updatedRoughness);
@@ -79,6 +82,23 @@ try {
             }
             catch(Exception $ex) {
                 printErrln("Error uploading data into local aggregations db.", PRINT_PID);
+                printErrln($ex, PRINT_PID);
+            }
+
+            try {
+
+                $aggStats = $srsAggregateDB->SRS_GetAggregatedStats($geomId);
+
+                if(count($aggStats) > 0) {
+                    $srsAggregateDB->SRS_UpdateQualityIndexes($aggStats);
+                    printDebugln(count($aggStats)."quality indexes updated for OsmId " . $geomId , PRINT_PID);
+                }else{
+                    printDebugln("Aggregate Statistics list is null!", PRINT_PID);
+                }
+
+            }
+            catch(Exception $ex) {
+                printErrln("Error calculating quality indexes of aggregated values.", PRINT_PID);
                 printErrln($ex, PRINT_PID);
             }
 
