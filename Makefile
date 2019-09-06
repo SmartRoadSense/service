@@ -4,6 +4,8 @@ ENV ?= prod
 DC := docker-compose -f docker-compose.yml -f docker-compose.${ENV}.yml --project-name smartroadsense
 DC_RUN := ${DC} run --rm
 
+CURRDIR=$(PWD)
+
 .PHONY: confirmation
 confirmation:
 	@echo -n 'Are you sure? [y|N] ' && read ans && [ $$ans == y ]
@@ -35,6 +37,13 @@ drop_volumes: confirmation
 	docker volume rm srs_open_data
 	docker volume rm srs_ui_repo_data
 	@echo 'SmartRoadSense external volumes dropped'
+
+.PHONY: config
+config: 
+	@echo 
+	@echo 'Generating SRS configuration'
+	docker run -it --rm --name srs-config-script -v ${CURRDIR}:/config dlpswr/srs-config-helper
+	@echo
 
 .PHONY: up
 up: data build
@@ -214,10 +223,10 @@ build: build_go
 build_go: jobs/meta-updater/meta-updater test/boom
 
 jobs/meta-updater/meta-updater: jobs/meta-updater/meta-updater.go
-	docker run --rm -v $${PWD}/jobs/meta-updater:/code michelesr/gopg:latest env CGO_ENABLED=0 go build /code/meta-updater.go
+	docker run --rm -v $${PWD}/jobs/meta-updater:/code dlpswr/gopg:latest env CGO_ENABLED=0 go build /code/meta-updater.go
 
 test/boom:
-	docker run --rm -it -v $${PWD}/test:/code michelesr/gopg:latest env CGO_ENABLED=0 \
+	docker run --rm -it -v $${PWD}/test:/code dlpswr/gopg:latest env CGO_ENABLED=0 \
 	  bash -c 'go get github.com/michelesr/boom && cp `which boom` .'
 
 .PHONY: clean clean_go clean_raw clean_ui clean_data
