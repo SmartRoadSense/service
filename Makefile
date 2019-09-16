@@ -25,8 +25,21 @@ data:
 test/payload.json:
 	gzip -kd test/payload.json.gz
 
+
+.PHONY: create_db_volumes drop_db_volumes
+create_db_volumes:
+	docker volume create postgis_db_data
+	@echo 'SmartRoadSense DATABASE volumes created'
+
+drop_db_volumes: confirmation
+	docker volume rm postgis_db_data
+	@echo 'SmartRoadSense DATABASE volumes dropped'
+
+init_db:	
+	${DC_RUN} raw-setup-db-cli ./db-schema/init-db.sh 
+
 .PHONY: create_volumes drop_volumes
-create_volumes:
+create_volumes: 
 	docker volume create srs_web_data
 	docker volume create srs_open_data
 	docker volume create srs_ui_repo_data
@@ -63,15 +76,6 @@ down:
 .PHONY: ps
 ps:
 	${DC} ps
-
-.PHONY: init init_raw init_agg
-init: init_raw init_agg
-
-init_raw:
-	${DC_RUN} raw-cli /code/init.sh
-
-init_agg:
-	${DC_RUN} agg-cli /code/init.sh
 
 .PHONY: enable_jobs enable_6h_jobs enable_weekly_jobs
 enable_jobs: enable_6h_jobs enable_weekly_jobs
@@ -146,7 +150,7 @@ export_raw:
 	${DC_RUN} raw-cli pg_dump -a -T 'planet_osm*' -f /code/data.sql
 
 export_agg:
-	${DC_RUN} agg-cli pg_dump -a -f /code/data.sql
+	${DC_RUN} agg-cli pg_dump -a -f /data/data.sql
 
 export_single_data_as_JSON:
 	${DC_RUN} raw-cli psql  -c 'select st_asgeojson(st_collect(position)) from single_data;' -o /code/single_data.json

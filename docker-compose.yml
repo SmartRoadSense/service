@@ -7,6 +7,9 @@ volumes:
     external: true
   srs_ui_repo_data:
     external: true
+  postgis-data:
+    external:
+      name: postgis_db_data
 
 services:
   web:
@@ -112,3 +115,28 @@ services:
     - ./webhooks/:/app/hooks/:ro
     - /var/run/docker.sock:/var/run/docker.sock:rw
     - ./:/code/:ro
+
+  db:
+    image: kartoza/postgis:11.0-2.5
+    volumes:
+    - postgis-data:/var/lib/postgresql
+    environment:
+    - ALLOW_IP_RANGE=0.0.0.0/0
+    - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,ogr_fdw
+    env_file: config.env   
+    ports:
+    - 5000:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+ 
+  raw-setup-db-cli:
+    image: smartroadsense/postgres-cli:3.0
+    volumes:
+    - ./db-setup:/db-schema     
+    environment:
+    - PGPORT=5432
+    - PGHOST=db
+    env_file: config.env
+
+
