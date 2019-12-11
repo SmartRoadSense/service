@@ -8,6 +8,8 @@ require_once __DIR__.'/../logutils/DebugUtils.php';
 require_once __DIR__.'/../logutils/ProfilingUtils.php';
 
 
+ini_set('memory_limit','4196M');
+
 define("PRINT_PID", true);
 
 ob_implicit_flush(true);
