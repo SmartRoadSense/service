@@ -1,7 +1,8 @@
+.vs/*
+.vscode/*
+.idea/*
 data/*
 !data/placeholder
 config.env
 *.pbf*
-.idea/*
-.vscode/*
 srs.env
