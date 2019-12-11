@@ -130,7 +130,7 @@ class SrsAggregateDB {
     public function SRS_GetAggregatedStats($geomId)
     {
         $aggPointsStats = array();
-        $query = "SELECT the_geom, last_count, last_stddev, last_ppe, osm_id FROM current;";
+        $query = "SELECT the_geom, last_count, last_stddev, last_ppe, osm_id FROM current WHERE osm_id = {$geomId};";
 
         $result = pg_query($this -> conn, $query);
 
