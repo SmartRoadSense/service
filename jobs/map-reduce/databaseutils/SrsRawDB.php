@@ -148,7 +148,7 @@ class SrsRawDB {
 	public function SRS_Tracks() {
 		$tracks = array();
 
-		$result = pg_query($this -> conn, 'SELECT DISTINCT track_id as track FROM  '.SrsRawDB::POINTS_TABLE.' WHERE osm_line_id IS NOT NULL  AND projection_fixed  = 0 AND evaluate = 1 AND track_id IS NOT NULL;');
+		$result = pg_query($this -> conn, "SELECT DISTINCT sd.track_id as track FROM  ".SrsRawDB::POINTS_TABLE." AS sd LEFT JOIN track AS tk ON tk.track_id = sd.track_id where sd.osm_line_id IS NOT NULL AND sd.projection_fixed  = 1 AND sd.evaluate = 1 AND tk.track_id IS NOT NULL AND (tk.metadata::json->>'clientMark' is null OR tk.metadata::json->>'clientMark' != 'ktrack-beta');");
 
 		if (!$result)
 			throw new Exception("Error fetching SRS Tracks list: " . pg_last_error($this -> conn));
