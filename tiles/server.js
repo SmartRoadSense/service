@@ -18,7 +18,7 @@ if (cluster.isMaster) {
 
   let Canvas = require('canvas');
   let http = require('http');
-  let SphericalMercator = require('sphericalmercator');
+  let SphericalMercator = require('@mapbox/sphericalmercator');
   let app = require('express')();
 
   // Server port
