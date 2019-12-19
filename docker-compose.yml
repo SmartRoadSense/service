@@ -61,6 +61,7 @@ services:
     env_file: config.env
     volumes:
     - ./raw/cli:/code:rw
+    - ./data:/data:rw
   raw-web:
     container_name: raw-web
     build: ./raw/web
