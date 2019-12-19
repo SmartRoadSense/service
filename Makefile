@@ -36,6 +36,9 @@ drop_db_volumes: confirmation
 	@echo 'SmartRoadSense DATABASE volumes dropped'
 
 init_db:	
+	${DC} up -d db
+	@echo 'Waiting while db is starting...'
+	sleep 5	
 	${DC_RUN} raw-setup-db-cli ./db-schema/init-db.sh 
 
 .PHONY: create_volumes drop_volumes
