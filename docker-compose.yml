@@ -73,6 +73,13 @@ services:
     env_file: config.env
     volumes: ['./data:/data:rw']
 
+  data-api:
+    container_name: data-api
+    build: ./data-api
+    env_file: config.env
+    ports:
+    - "127.0.0.1:5555:5555"
+
   bb:
     container_name: bb
     build: ./bb
