@@ -2,7 +2,7 @@
 
 ![SmartRoadSense logo](docs/media/logo-small.png)
 
-# SETUP
+## SETUP with external DBs
 1. Clone the repository
 2. Setup external databases as needed
 3. Edit `srs.env-template` file and rename it as `srs.env`
