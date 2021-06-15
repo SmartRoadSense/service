@@ -2,40 +2,29 @@
 version: '3'
 services:
   web:
-    ports:
-    - "0.0.0.0:80:8080"
     volumes:
     - ./web/prod.conf:/etc/nginx/conf.d/smartroadsense.conf:ro
     - /tmp/tiles:/tmp/tiles:rw
     - /tmp/osm_tiles:/tmp/osm_tiles:rw
-    restart: always
-
-  ui:
-    environment:
-    - HUGO_BASEURL=http://www.smartroadsense.it/
-    restart: always
+    restart: unless-stopped
 
   tiles:
-    restart: always
+    restart: unless-stopped
 
   agg-web:
-    ports:
-    - "127.0.0.1:9001:80"
-    restart: always
+    restart: unless-stopped
 
   bb:
-    restart: always
+    restart: unless-stopped
 
   ws:
-    restart: always
+    restart: unless-stopped
 
   api:
-    restart: always
+    restart: unless-stopped
 
   raw-web:
-    ports:
-    - "127.0.0.1:9002:80"
-    restart: always
+    restart: unless-stopped
 
   webhookmonitor:
     environment:
