@@ -55,14 +55,8 @@ services:
   web:
     container_name: web
     build: ./web
-    volumes:
-    - srs_web_data:/www:ro
-    - srs_open_data:/opendata:ro
     depends_on:
-    - tiles
-    - ui
     - ws
-    - api
 
   ui:
     container_name: ui
@@ -78,10 +72,11 @@ services:
     command: nodemon server.js
     volumes:
     - ./tiles:/code:ro
-    ports:
-    - "127.0.0.1:8000:8000"
     depends_on:
     - ws
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.tiles.rule=Host(`tiles.smartroadsense.it`)"
 
   agg-cli:
     container_name: agg-cli
