@@ -13,7 +13,7 @@ volumes:
 
 services:
   reverse-proxy:
-    image: traefik:v2.4.8
+    image: traefik:v2.4.9
     command:
     - "--accesslog=true"
     - "--log.level=DEBUG"
